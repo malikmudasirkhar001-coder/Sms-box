@@ -2,41 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Messages Clone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#ffffff">
+    <title>Messages</title>
     <style>
-        /* --- Global Styles --- */
+        /* --- Global & Reset Styles --- */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
-            user-select: none; /* Prevents text selection on long press */
+            -webkit-touch-callout: none; /* Disables default iOS callout */
+            user-select: none; /* Prevents text selection glitch */
         }
         body {
-            background-color: #f1f3f4;
+            background-color: #fff;
             display: flex;
             justify-content: center;
             height: 100vh;
+            height: 100dvh; /* For modern mobile browsers */
             overflow: hidden;
         }
 
-        /* --- App Container --- */
+        /* --- App Container (Responsive) --- */
         .app-container {
             width: 100%;
-            max-width: 400px;
+            max-width: 500px; /* Max width for tablets/desktop */
             background-color: #fff;
-            height: 100vh;
+            height: 100%;
             display: flex;
             flex-direction: column;
             position: relative;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
 
         /* --- Header (List View) --- */
         .header {
-            padding: 15px 20px;
+            /* Margin-top added to push it down below mobile status bar/notch */
+            padding: calc(15px + env(safe-area-inset-top)) 20px 15px 20px; 
             display: flex;
             align-items: center;
             background: #fff;
@@ -44,11 +47,15 @@
             position: relative;
         }
         .header h1 {
-            font-size: 20px;
-            font-weight: 500;
+            font-size: 22px;
+            font-weight: 400;
             color: #202124;
+            letter-spacing: -0.5px;
         }
-        .header h1 span { color: #1a73e8; font-weight: bold; }
+        .header h1 span { 
+            font-weight: 600; /* Bold for Google */
+            color: #202124; 
+        }
         
         .top-avatar {
             position: absolute;
@@ -77,19 +84,19 @@
             cursor: pointer;
             transition: background 0.2s;
         }
-        .chat-item:hover {
+        .chat-item:hover, .chat-item:active {
             background-color: #f8f9fa;
         }
         .avatar {
-            width: 45px;
-            height: 45px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 22px;
             margin-right: 15px;
             flex-shrink: 0;
         }
@@ -126,7 +133,7 @@
             display: none;
             flex-direction: column;
             height: 100%;
-            background-color: #f8f9fa;
+            background-color: #fff;
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             z-index: 10;
@@ -134,7 +141,7 @@
         .chat-header {
             display: flex;
             align-items: center;
-            padding: 10px 15px;
+            padding: calc(10px + env(safe-area-inset-top)) 15px 10px 15px; /* Safe area top */
             background: #fff;
             border-bottom: 1px solid #e0e0e0;
         }
@@ -149,6 +156,7 @@
         .chat-header-info h3 {
             font-size: 16px;
             color: #202124;
+            font-weight: 500;
         }
         
         .messages-area {
@@ -157,7 +165,8 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px; /* Slight gap between messages */
+            background-color: #fff;
         }
         
         .msg-bubble {
@@ -168,28 +177,36 @@
             line-height: 1.4;
             word-wrap: break-word;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: background-color 0.1s;
+            /* Glitch fix: Ensure text doesn't get selected on long press */
+            -webkit-user-select: none;
+            user-select: none;
         }
         .msg-bubble.active-press {
-            background-color: #d1d5db !important; /* Highlight on hold */
+            background-color: #d1d5db !important; 
         }
         
         .msg-received {
-            background-color: #e8eaed;
+            background-color: #f1f3f4;
             color: #202124;
             align-self: flex-start;
             border-bottom-left-radius: 4px;
         }
         
         .msg-sent {
-            background-color: #b5e7a0; 
+            background-color: #b5e7a0; /* Exact light green */
             color: #202124;
             align-self: flex-end;
             border-bottom-right-radius: 4px;
         }
         
         /* RTL Support for Urdu */
-        .rtl-text { direction: rtl; text-align: right; font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif; font-size: 17px; }
+        .rtl-text { 
+            direction: rtl; 
+            text-align: right; 
+            font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif; 
+            font-size: 17px; 
+        }
         
         .sending-text {
             text-align: center;
@@ -198,11 +215,11 @@
             margin: 5px 0;
         }
         .sending-text span { text-decoration: underline; color: #5f6368; }
-        .jazz-text { color: #8e24aa; font-size: 12px; margin-left: 5px; margin-bottom: 10px; }
+        .jazz-text { color: #8e24aa; font-size: 13px; margin-left: 5px; margin-bottom: 10px; font-weight: 500;}
 
         /* --- Input Area --- */
         .chat-input-area {
-            padding: 8px 10px;
+            padding: 8px 10px calc(8px + env(safe-area-inset-bottom)) 10px; /* Safe area bottom */
             background: #f1f3f4;
             display: flex;
             align-items: center;
@@ -238,9 +255,9 @@
             margin-left: 10px;
         }
         
-        /* FIXED: Changed Send Button to Paper Plane/Send Icon */
+        /* Send Button (No Mic) */
         .chat-input-area button.send-btn {
-            background: #1a73e8; /* Google Blue */
+            background: #1a73e8;
             color: white;
             border: none;
             border-radius: 50%;
@@ -326,31 +343,7 @@
         .btn-save { background: #1a73e8; color: white; }
         .btn-close { background: #f1f3f4; color: #5f6368; }
 
-        /* --- Toast Notification --- */
-        #toast {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 25px;
-            padding: 15px;
-            position: fixed;
-            z-index: 1000;
-            left: 50%;
-            bottom: 30px;
-            transform: translateX(-50%);
-            font-size: 14px;
-            opacity: 0;
-            transition: opacity 0.3s, bottom 0.3s;
-        }
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-            bottom: 50px;
-        }
-
-        /* --- Message Action Menu (Delete/Forward) --- */
+        /* --- Action Menu (Delete/Forward) --- */
         .action-menu-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -369,6 +362,11 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             display: flex;
             flex-direction: column;
+            animation: popIn 0.2s ease-out;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
         .action-menu-btn {
             padding: 15px;
@@ -383,17 +381,41 @@
             align-items: center;
             gap: 10px;
         }
-        .action-menu-btn:hover { background: #f8f9fa; }
+        .action-menu-btn:active { background: #f8f9fa; }
         .action-menu-btn.danger { color: #d93025; }
         .action-menu-btn:last-child { border-bottom: none; }
 
+        /* --- Toast Notification --- */
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 25px;
+            padding: 12px 20px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
     </style>
 </head>
 <body>
 
     <div class="app-container">
         
-        <!-- Chat List -->
+        <!-- Chat List Screen -->
         <div class="chat-list" id="main-list">
             <div class="header">
                 <h1><span>Google</span> Messages</h1>
@@ -432,7 +454,7 @@
                 </div>
             </div>
 
-            <!-- 9771 Chat -->
+            <!-- 9771 Chat (Target) -->
             <div class="chat-item" onclick="openChat('9771', '#ffd54f')">
                 <div class="avatar" style="background: #ffd54f;">👤</div>
                 <div class="chat-details">
@@ -442,46 +464,49 @@
             </div>
         </div>
 
-        <!-- Start Chat FAB -->
+        <!-- Start Chat FAB (Triple Click for Admin) -->
         <button class="fab" id="start-chat-btn">💬 Start chat</button>
 
-        <!-- Chat View -->
+        <!-- Inner Chat Screen -->
         <div class="chat-view" id="chat-view">
             <div class="chat-header">
                 <button class="back-btn" onclick="closeChat()">←</button>
-                <div class="avatar" id="current-avatar" style="width: 35px; height: 35px; font-size: 16px;">👤</div>
-                <div class="chat-header-info" style="margin-left: 10px;">
+                <div class="avatar" id="current-avatar" style="width: 36px; height: 36px; font-size: 16px; margin-right:10px;">👤</div>
+                <div class="chat-header-info">
                     <h3 id="current-name">9771</h3>
                 </div>
             </div>
             
             <div class="messages-area" id="messages-area">
-                <!-- Messages loaded dynamically via JS -->
+                <!-- Messages loaded dynamically -->
             </div>
 
-            <!-- Input Box with FIXED Send Button (No Microphone) -->
+            <!-- Input Box -->
             <div class="chat-input-area">
                 <div class="plus-icon">⊕</div>
                 <div class="input-wrapper">
-                    <input type="text" id="msg-input" placeholder="1 Jazz • Text">
+                    <input type="text" id="msg-input" placeholder="1 Jazz • Text" onkeypress="handleEnter(event)">
                     <span class="smile-icon">😊</span>
                 </div>
-                <button class="send-btn" onclick="sendCustomMessage()">➤</button>
+                <button class="send-btn" onclick="sendCustomMessage()">
+                    <!-- Send Icon SVG -->
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                </button>
             </div>
         </div>
 
     </div>
 
-    <!-- Admin Panel -->
+    <!-- Admin Panel Overlay -->
     <div class="admin-overlay" id="admin-overlay">
         <div class="admin-panel">
             <h3>Admin Settings</h3>
             
             <label>Update Bike/Sawari Number</label>
-            <input type="text" id="bike-input" placeholder="Enter bike number" value="LEX-11-2277">
+            <input type="text" id="bike-input" placeholder="Enter bike number">
 
             <label>Update Token Number</label>
-            <input type="text" id="token-input" placeholder="Enter token number" value="7715583817">
+            <input type="text" id="token-input" placeholder="Enter token number">
 
             <div class="admin-buttons">
                 <button class="btn-close" onclick="closeAdmin()">Cancel</button>
@@ -490,26 +515,27 @@
         </div>
     </div>
 
-    <!-- Action Menu (Delete/Forward) -->
+    <!-- Action Menu (Delete/Forward) Overlay -->
     <div class="action-menu-overlay" id="action-menu-overlay">
         <div class="action-menu">
             <button class="action-menu-btn" onclick="forwardMessage()">➡️ Forward</button>
             <button class="action-menu-btn danger" onclick="deleteMessage()">🗑️ Delete</button>
-            <button class="action-menu-btn" onclick="closeActionMenu()" style="justify-content:center; color:#1a73e8;">Cancel</button>
+            <button class="action-menu-btn" onclick="closeActionMenu()" style="justify-content:center; color:#1a73e8; font-weight:bold;">Cancel</button>
         </div>
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast">Message Deleted</div>
+    <div id="toast">Message</div>
 
     <script>
-        // Global Variables
+        // --- Local Storage / Data Variables ---
+        // Default values
         let currentToken = "7715583817";
         let currentBikeNumber = "LEX-11-2277";
-        let selectedMessageId = null; // Stores the ID of the message being held
+        let selectedMessageId = null;
 
-        // Base Chat Data Array
-        let messagesData = [
+        // Default messages array
+        let defaultMessages = [
             { id: 1, type: 'received', text: 'آپ ٹوکن نمبر 7715583817 سے سواری رجسٹر ہو سکتی ہے۔', rtl: true },
             { id: 2, type: 'sent', text: 'REG 3230373410243 LEX2277 P 09052011' },
             { id: 3, type: 'received', text: 'رجسٹریشن ناکام۔ 8 گھنٹے بعد دوبارہ کوشش کریں۔', rtl: true },
@@ -519,8 +545,40 @@
             { id: 7, type: 'sent', text: 'TOK' }
         ];
 
+        let messagesData = [];
+
+        // --- Load Data from LocalStorage (Offline Support) ---
+        function loadData() {
+            const savedToken = localStorage.getItem('app_token');
+            const savedBike = localStorage.getItem('app_bike');
+            const savedMessages = localStorage.getItem('app_messages');
+
+            if (savedToken) currentToken = savedToken;
+            if (savedBike) currentBikeNumber = savedBike;
+            
+            if (savedMessages) {
+                messagesData = JSON.parse(savedMessages);
+            } else {
+                messagesData = [...defaultMessages]; // Load defaults if no saved data
+            }
+
+            // Update UI preview
+            updatePreviewText();
+        }
+
+        // --- Save Data to LocalStorage ---
+        function saveData() {
+            localStorage.setItem('app_token', currentToken);
+            localStorage.setItem('app_bike', currentBikeNumber);
+            localStorage.setItem('app_messages', JSON.stringify(messagesData));
+        }
+
         function getTokenMessage() {
             return `آپ ٹوکن نمبر ${currentToken} سے سواری نمبر ${currentBikeNumber} کے لیے 500 روپے کا فائل ریلیف حاصل کر سکتے ہیں۔ یہ ٹوکن 10:05 تا 01-Nov قابل استعمال ہے۔`;
+        }
+
+        function updatePreviewText() {
+            document.getElementById('preview-token-msg').innerText = `آپ ٹوکن نمبر ${currentToken} سے سواری ن...`;
         }
 
         // --- Chat Functions ---
@@ -553,8 +611,7 @@
             const tokenDiv = document.createElement('div');
             tokenDiv.className = 'msg-bubble msg-received rtl-text';
             tokenDiv.innerText = getTokenMessage();
-            // Add long press to dynamic token too
-            addLongPressEvent(tokenDiv, 'dynamic_token');
+            addLongPressEvent(tokenDiv, 'dynamic_token'); // Prevent deleting this
             area.appendChild(tokenDiv);
             
             // 3. Render Jazz footer
@@ -563,6 +620,7 @@
             jazzDiv.innerHTML = '• Jazz';
             area.appendChild(jazzDiv);
             
+            // Scroll to bottom
             setTimeout(() => { area.scrollTop = area.scrollHeight; }, 50);
         }
 
@@ -587,43 +645,35 @@
             container.appendChild(div);
         }
 
-        // --- Long Press to Open Menu (Delete/Forward) ---
+        // --- Long Press Logic (Glitch Free) ---
         let pressTimer;
+        let isLongPress = false;
         
         function addLongPressEvent(element, msgId) {
-            // Mobile Touch Events
-            element.addEventListener('touchstart', (e) => {
+            const startPress = (e) => {
+                isLongPress = false;
                 element.classList.add('active-press');
                 pressTimer = setTimeout(() => {
+                    isLongPress = true;
                     element.classList.remove('active-press');
                     openActionMenu(msgId);
                 }, 1000); // 1 second hold
-            });
-            element.addEventListener('touchend', () => {
-                element.classList.remove('active-press');
-                clearTimeout(pressTimer);
-            });
-            element.addEventListener('touchmove', () => {
-                element.classList.remove('active-press');
-                clearTimeout(pressTimer);
-            });
+            };
 
-            // Desktop Mouse Events
-            element.addEventListener('mousedown', () => {
-                element.classList.add('active-press');
-                pressTimer = setTimeout(() => {
-                    element.classList.remove('active-press');
-                    openActionMenu(msgId);
-                }, 1000);
-            });
-            element.addEventListener('mouseup', () => {
+            const cancelPress = () => {
                 element.classList.remove('active-press');
                 clearTimeout(pressTimer);
-            });
-            element.addEventListener('mouseleave', () => {
-                element.classList.remove('active-press');
-                clearTimeout(pressTimer);
-            });
+            };
+
+            // Mobile Touch
+            element.addEventListener('touchstart', startPress, {passive: true});
+            element.addEventListener('touchend', cancelPress);
+            element.addEventListener('touchmove', cancelPress);
+
+            // Desktop Mouse
+            element.addEventListener('mousedown', startPress);
+            element.addEventListener('mouseup', cancelPress);
+            element.addEventListener('mouseleave', cancelPress);
         }
 
         function openActionMenu(msgId) {
@@ -643,14 +693,15 @@
                 return;
             }
             
+            // Filter out the selected message
             messagesData = messagesData.filter(m => m.id !== selectedMessageId);
+            saveData(); // Save to local storage
             renderAllMessages();
             showToast("Message Deleted");
             closeActionMenu();
         }
 
         function forwardMessage() {
-            // Simple alert for forward functionality
             showToast("Message Forwarded!");
             closeActionMenu();
         }
@@ -667,7 +718,7 @@
             document.getElementById('main-list').style.display = 'block';
         }
 
-        // Send custom message from input box
+        // --- Send Message ---
         function sendCustomMessage() {
             const input = document.getElementById('msg-input');
             const text = input.value.trim();
@@ -675,12 +726,19 @@
 
             const newId = Date.now();
             messagesData.push({ id: newId, type: 'sent', text: text });
+            saveData(); // Save offline
             
             input.value = '';
             renderAllMessages();
         }
 
-        // --- Admin Panel Logic ---
+        function handleEnter(e) {
+            if(e.key === 'Enter') {
+                sendCustomMessage();
+            }
+        }
+
+        // --- Admin Panel Logic (Triple Click) ---
         let clickCount = 0;
         let clickTimer = null;
 
@@ -711,14 +769,14 @@
             const newBike = document.getElementById('bike-input').value.trim();
             
             if(newToken === "" || newBike === "") {
-                alert("Fields cannot be empty!");
+                showToast("Fields cannot be empty!");
                 return;
             }
 
             currentToken = newToken;
             currentBikeNumber = newBike;
-
-            document.getElementById('preview-token-msg').innerText = `آپ ٹوکن نمبر ${currentToken} سے سواری ن...`;
+            saveData(); // Save to local storage
+            updatePreviewText();
 
             if(document.getElementById('chat-view').style.display === 'flex') {
                 renderAllMessages();
@@ -727,6 +785,11 @@
             showToast("Data Updated Successfully!");
             closeAdmin();
         }
+
+        // Initialize App on load
+        window.onload = function() {
+            loadData();
+        };
     </script>
 </body>
 </html>
