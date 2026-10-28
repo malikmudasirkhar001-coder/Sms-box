@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,9 +63,36 @@
             align-items: center;
         }
         .top-header h1 span { font-weight: 600; color: #202124; margin-right: 5px; }
-        .header-icons { display: flex; align-items: center; gap: 20px; }
-        .search-icon { font-size: 24px; color: #202124; }
         
+        .header-icons { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+        }
+        
+        /* Authentic Search Bar */
+        .search-container {
+            flex: 1;
+            max-width: 200px;
+            display: flex;
+            align-items: center;
+            background: #e8eaed;
+            border-radius: 20px;
+            padding: 8px 12px;
+            margin-right: 10px;
+        }
+        .search-container input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 14px;
+            width: 100%;
+            color: #202124;
+        }
+        .search-container input::placeholder {
+            color: #5f6368;
+        }
+
         .top-avatar-img {
             width: 32px;
             height: 32px;
@@ -83,6 +111,7 @@
         }
         .chat-item:active { background-color: #e8eaed; }
         
+        /* Avatar click opens profile, chat click opens chat */
         .avatar-circle {
             width: 50px;
             height: 50px;
@@ -95,6 +124,7 @@
             font-size: 28px;
             margin-right: 15px;
             flex-shrink: 0;
+            cursor: pointer;
         }
         
         .chat-details {
@@ -195,7 +225,6 @@
             align-items: center;
             padding: calc(10px + env(safe-area-inset-top)) 15px 10px 15px;
             background: #f8f9fa;
-            cursor: pointer; 
         }
         .back-btn {
             background: none;
@@ -204,13 +233,13 @@
             cursor: pointer;
             margin-right: 15px;
             color: #202124;
-            z-index: 15;
         }
         .header-info {
             display: flex;
             align-items: center;
             gap: 15px;
             flex: 1;
+            cursor: pointer; /* Click to open profile */
         }
         .header-info .avatar-circle {
             width: 40px;
@@ -345,10 +374,10 @@
             width: 24px;
             height: 24px;
             fill: #0d652d;
-            margin-left: 4px; /* Slight adjustment for send arrow */
+            margin-left: 4px;
         }
 
-        /* --- 3. Floating Long Press Menu (Reply, Call, Add Contact, Info) --- */
+        /* --- 3. Long Press Floating Menu (Reply, Call, Contact, Info) --- */
         .floating-menu-overlay {
             position: absolute; 
             top: 0; left: 0; right: 0; bottom: 0;
@@ -395,7 +424,51 @@
             color: #5f6368;
         }
 
-        /* --- 4. Profile / Contact Info Screen --- */
+        /* --- 4. Long Press Action Menu (Copy, Forward, Delete) --- */
+        .action-menu-overlay {
+            position: absolute; 
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.2); 
+            display: none; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 250;
+            backdrop-filter: blur(2px);
+        }
+        .action-menu {
+            background: #fff; 
+            border-radius: 24px; 
+            width: 80%; 
+            max-width: 300px;
+            padding: 10px 0;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            display: flex; 
+            flex-direction: column;
+        }
+        .action-menu-btn {
+            padding: 16px 20px; 
+            font-size: 16px; 
+            color: #202124; 
+            text-align: left;
+            border: none; 
+            background: transparent; 
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .action-menu-btn:active { background: #f1f3f4; }
+        .action-menu-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: #5f6368;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* --- 5. Profile / Contact Info Screen --- */
         .profile-screen {
             display: none;
             flex-direction: column;
@@ -462,7 +535,7 @@
             width: 100px;
             height: 50px;
             border-radius: 25px;
-            background: #d7f0e3; /* Light green */
+            background: #d7f0e3;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -474,7 +547,6 @@
             color: #202124;
         }
 
-        /* Profile Cards */
         .profile-card {
             background: #fff;
             border-radius: 12px;
@@ -531,7 +603,6 @@
             color: #5f6368;
         }
 
-        /* List Items */
         .profile-list-item {
             background: #fff;
             border-radius: 12px;
@@ -597,16 +668,18 @@
             <div class="top-header">
                 <h1><span>Google</span> Messages</h1>
                 <div class="header-icons">
-                    <span class="search-icon">🔍</span>
-                    <!-- User provided Blue Avatar Image -->
+                    <!-- Authentic Search Bar -->
+                    <div class="search-container">
+                        <input type="text" placeholder="Search...">
+                    </div>
                     <img src="https://i.ibb.co/8gvbm3XM/160165.jpg" class="top-avatar-img" alt="Profile">
                 </div>
             </div>
 
             <!-- Chat 1 -->
-            <div class="chat-item" onclick="openChat('0303 0300000', '#ab47bc', '0')">
-                <div class="avatar-circle" style="background: #ab47bc;">👤</div>
-                <div class="chat-details">
+            <div class="chat-item">
+                <div class="avatar-circle" style="background: #ab47bc;" onclick="event.stopPropagation(); openProfile('0303 0300000', '#ab47bc')">👤</div>
+                <div class="chat-details" onclick="openChat('0303 0300000', '#ab47bc')">
                     <div class="chat-top">
                         <span class="chat-name">0303 0300000</span>
                         <div class="chat-meta"><span>6 min</span><span class="unread-badge">1</span></div>
@@ -616,9 +689,9 @@
             </div>
 
             <!-- Chat 2 -->
-            <div class="chat-item" onclick="openChat('6633', '#26c6da', '6')">
-                <div class="avatar-circle" style="background: #26c6da;">👤</div>
-                <div class="chat-details">
+            <div class="chat-item">
+                <div class="avatar-circle" style="background: #26c6da;" onclick="event.stopPropagation(); openProfile('6633', '#26c6da')">👤</div>
+                <div class="chat-details" onclick="openChat('6633', '#26c6da')">
                     <div class="chat-top">
                         <span class="chat-name">6633</span>
                         <div class="chat-meta"><span>7:10 PM</span><span class="unread-badge">1</span></div>
@@ -628,9 +701,9 @@
             </div>
 
             <!-- Chat 3 -->
-            <div class="chat-item" onclick="openChat('JAZZ 5G', '#ffca28', 'J')">
-                <div class="avatar-circle" style="background: #ffca28;">👤</div>
-                <div class="chat-details">
+            <div class="chat-item">
+                <div class="avatar-circle" style="background: #ffca28;" onclick="event.stopPropagation(); openProfile('JAZZ 5G', '#ffca28')">👤</div>
+                <div class="chat-details" onclick="openChat('JAZZ 5G', '#ffca28')">
                     <div class="chat-top">
                         <span class="chat-name">JAZZ 5G</span>
                         <div class="chat-meta"><span>6:03 PM</span></div>
@@ -640,9 +713,9 @@
             </div>
 
             <!-- Chat 4 (Draft) -->
-            <div class="chat-item" onclick="openChat('8558', '#4dd0e1', '8')">
-                <div class="avatar-circle" style="background: #4dd0e1;">👤</div>
-                <div class="chat-details">
+            <div class="chat-item">
+                <div class="avatar-circle" style="background: #4dd0e1;" onclick="event.stopPropagation(); openProfile('8558', '#4dd0e1')">👤</div>
+                <div class="chat-details" onclick="openChat('8558', '#4dd0e1')">
                     <div class="chat-top">
                         <span class="chat-name">8558</span>
                         <div class="chat-meta"><span style="font-style:italic;">Draft</span></div>
@@ -652,9 +725,9 @@
             </div>
 
             <!-- Chat 5 -->
-            <div class="chat-item" onclick="openChat('Jazz', '#26c6da', 'J')">
-                <div class="avatar-circle" style="background: #26c6da;">👤</div>
-                <div class="chat-details">
+            <div class="chat-item">
+                <div class="avatar-circle" style="background: #26c6da;" onclick="event.stopPropagation(); openProfile('Jazz', '#26c6da')">👤</div>
+                <div class="chat-details" onclick="openChat('Jazz', '#26c6da')">
                     <div class="chat-top">
                         <span class="chat-name">Jazz</span>
                         <div class="chat-meta"><span>12:01 PM</span><span class="unread-badge">2</span></div>
@@ -664,9 +737,9 @@
             </div>
 
             <!-- Chat 6 -->
-            <div class="chat-item" onclick="openChat('JAZZ OFFER', '#ab47bc', 'J')">
-                <div class="avatar-circle" style="background: #ab47bc;">👤</div>
-                <div class="chat-details">
+            <div class="chat-item">
+                <div class="avatar-circle" style="background: #ab47bc;" onclick="event.stopPropagation(); openProfile('JAZZ OFFER', '#ab47bc')">👤</div>
+                <div class="chat-details" onclick="openChat('JAZZ OFFER', '#ab47bc')">
                     <div class="chat-top">
                         <span class="chat-name">JAZZ OFFER</span>
                         <div class="chat-meta"><span>9:17 AM</span><span class="unread-badge">1</span></div>
@@ -676,9 +749,9 @@
             </div>
 
             <!-- Chat 7 -->
-            <div class="chat-item" onclick="openChat('SIMOSA', '#ff9800', 'S')">
-                <div class="avatar-circle" style="background: #ff9800;">👤</div>
-                <div class="chat-details">
+            <div class="chat-item">
+                <div class="avatar-circle" style="background: #ff9800;" onclick="event.stopPropagation(); openProfile('SIMOSA', '#ff9800')">👤</div>
+                <div class="chat-details" onclick="openChat('SIMOSA', '#ff9800')">
                     <div class="chat-top">
                         <span class="chat-name">SIMOSA</span>
                         <div class="chat-meta"><span>Tue</span><span class="unread-badge">1</span></div>
@@ -688,9 +761,9 @@
             </div>
 
             <!-- Chat 8 -->
-            <div class="chat-item" onclick="openChat('JAZZ', '#ff9800', 'J')">
-                <div class="avatar-circle" style="background: #ff9800;">👤</div>
-                <div class="chat-details">
+            <div class="chat-item">
+                <div class="avatar-circle" style="background: #ff9800;" onclick="event.stopPropagation(); openProfile('JAZZ', '#ff9800')">👤</div>
+                <div class="chat-details" onclick="openChat('JAZZ', '#ff9800')">
                     <div class="chat-top">
                         <span class="chat-name">JAZZ</span>
                     </div>
@@ -699,9 +772,9 @@
             </div>
 
             <!-- Chat 9 (Target Chat) -->
-            <div class="chat-item" onclick="openChat(currentChatId, '#ffca28', currentAvatarLetter)">
-                <div class="avatar-circle" id="list-avatar" style="background: #ffca28;">👤</div>
-                <div class="chat-details">
+            <div class="chat-item">
+                <div class="avatar-circle" id="list-avatar" style="background: #ffca28;" onclick="event.stopPropagation(); openProfile(currentChatId, '#ffca28')">👤</div>
+                <div class="chat-details" onclick="openChat(currentChatId, '#ffca28')">
                     <div class="chat-top">
                         <span class="chat-name" id="list-chat-name">9771</span>
                     </div>
@@ -716,10 +789,10 @@
 
         <!-- 2. Inner Chat View -->
         <div class="chat-view" id="chat-view">
-            <!-- Clickable Header to open Profile -->
-            <div class="chat-header" onclick="openProfile()">
+            <div class="chat-header">
                 <button class="back-btn" onclick="closeChat(event)">←</button>
-                <div class="header-info">
+                <!-- Clicking header info opens Profile -->
+                <div class="header-info" onclick="openProfileFromChat()">
                     <div class="avatar-circle" id="current-avatar" style="background: #ffca28;">👤</div>
                     <h3 id="current-name">9771</h3>
                 </div>
@@ -748,7 +821,7 @@
             </div>
         </div>
 
-        <!-- 3. Floating Long Press Menu -->
+        <!-- 3. Floating Long Press Menu (Reply, Call, Contact, Info) -->
         <div class="floating-menu-overlay" id="floating-menu" onclick="closeFloatingMenu(event)">
             <div class="floating-avatar">
                 <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
@@ -761,14 +834,32 @@
             </div>
         </div>
 
-        <!-- 4. Profile / Contact Info Screen -->
+        <!-- 4. Long Press Action Menu (Copy, Forward, Delete) -->
+        <div class="action-menu-overlay" id="action-menu-overlay" onclick="closeActionMenu(event)">
+            <div class="action-menu" onclick="event.stopPropagation()">
+                <button class="action-menu-btn" onclick="forwardMessage()">
+                    <svg viewBox="0 0 24 24"><path d="M15 17l5-5-5-5M4 18v-7a4 4 0 014-4h12"></path></svg>
+                    Forward
+                </button>
+                <button class="action-menu-btn" onclick="copyMessage()">
+                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg>
+                    Copy
+                </button>
+                <button class="action-menu-btn" onclick="deleteMessage()">
+                    <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path></svg>
+                    Delete
+                </button>
+            </div>
+        </div>
+
+        <!-- 5. Profile / Contact Info Screen -->
         <div class="profile-screen" id="profile-screen">
             <div class="profile-header">
                 <button class="back-btn" onclick="closeProfile()">←</button>
             </div>
             
             <div class="profile-content">
-                <div class="profile-big-avatar">
+                <div class="profile-big-avatar" id="profile-big-avatar">
                     <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                 </div>
                 
@@ -789,7 +880,6 @@
                     </div>
                 </div>
 
-                <!-- Sending with Card -->
                 <div class="profile-card">
                     <div class="card-header">
                         <span>Sending with</span>
@@ -807,7 +897,6 @@
                     </div>
                 </div>
 
-                <!-- List Items -->
                 <div class="profile-list-item">
                     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
                     Chat theme
@@ -840,8 +929,6 @@
             <h3>Admin Settings</h3>
             <label>Chat Number / Name</label>
             <input type="text" id="admin-chat-id" placeholder="Enter chat number">
-            <label>Avatar Letter</label>
-            <input type="text" id="admin-avatar-letter" placeholder="Enter 1 letter or number" maxlength="2">
             <label>Update Bike/Sawari Number</label>
             <input type="text" id="bike-input" placeholder="Enter bike number">
             <label>Update Token Number</label>
@@ -860,38 +947,58 @@
         let currentToken = "9641257094";
         let currentBikeNumber = "LEQ-16-7403";
         let currentChatId = "9771";
-        let currentAvatarLetter = "9";
+        
+        let activeChatContext = ""; // Tracks which chat is currently open
+        let selectedMessageId = null;
+        let selectedMessageText = "";
+        let pressTimer;
 
-        let defaultMessages = [
-            { id: 1, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
-            { id: 2, type: 'sent', text: 'REG 3230373410243 LEX2278 P 07052011' },
-            { id: 3, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
-            { id: 4, type: 'sent', text: 'REG 3230373410243 LEX2280 P 07052011' },
-            { id: 5, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
-            { id: 6, type: 'received', text: 'رجسٹریشن ناکام۔ 8 گھنٹے بعد دوبارہ کوشش کریں۔', rtl: true },
-            { id: 7, type: 'system', text: 'Sending with Jazz' }
-        ];
-
-        let messagesData = [];
+        // Database for all chats
+        let allChatsData = {
+            "0303 0300000": [
+                { id: 1, type: 'received', text: 'معزز صارف، کیا آپ اپنے علاقے کے موسم، فصلوں اور جانوروں کی معلومات حاصل کرنا چاہتے ہیں؟', rtl: true }
+            ],
+            "6633": [
+                { id: 2, type: 'received', text: 'Jazz se Salam! Pakistan mein SMS jawab muft hain. Kya aap ka koi sawal hai?' }
+            ],
+            "JAZZ 5G": [
+                { id: 3, type: 'received', text: '1GBs MUFT DATA! Ap ko 2 din kay liye 1GB data de diya gaya hai.' }
+            ],
+            "8558": [
+                { id: 4, type: 'sent', text: 'You: 3230334312660', isDraft: true }
+            ],
+            "Jazz": [
+                { id: 5, type: 'received', text: 'Muaziz Sarif, Apko 1 din k liye 10 MUFT Jazz MINS de diye gaey he.' }
+            ],
+            "JAZZ OFFER": [
+                { id: 6, type: 'received', text: 'ماہانہ 800 جاز منٹس اور 1GB بک فیس خاص آپ کے لیے! صرف 147 کے بیلنس میں۔', rtl: true }
+            ],
+            "SIMOSA": [
+                { id: 7, type: 'received', text: 'MUFT 3GB tak data paayein, SIMOSA ke Daily Reward section se. Abhi claim karein.' }
+            ],
+            "9771": [
+                { id: 1, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
+                { id: 2, type: 'sent', text: 'REG 3230373410243 LEX2278 P 07052011' },
+                { id: 3, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
+                { id: 4, type: 'sent', text: 'REG 3230373410243 LEX2280 P 07052011' },
+                { id: 5, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
+                { id: 6, type: 'received', text: 'رجسٹریشن ناکام۔ 8 گھنٹے بعد دوبارہ کوشش کریں۔', rtl: true },
+                { id: 7, type: 'system', text: 'Sending with Jazz' }
+            ]
+        };
 
         function loadData() {
             const savedToken = localStorage.getItem('app_token');
             const savedBike = localStorage.getItem('app_bike');
             const savedChatId = localStorage.getItem('app_chat_id');
-            const savedAvatar = localStorage.getItem('app_avatar_letter');
-            const savedMessages = localStorage.getItem('app_messages');
+            const savedMessages = localStorage.getItem('app_messages_9771');
 
             if (savedToken) currentToken = savedToken;
             if (savedBike) currentBikeNumber = savedBike;
             if (savedChatId) currentChatId = savedChatId;
-            if (savedAvatar) currentAvatarLetter = savedAvatar;
-            
             if (savedMessages) {
-                messagesData = JSON.parse(savedMessages);
-            } else {
-                messagesData = [...defaultMessages];
+                allChatsData["9771"] = JSON.parse(savedMessages);
             }
-            
             updateUIElements();
         }
 
@@ -899,8 +1006,7 @@
             localStorage.setItem('app_token', currentToken);
             localStorage.setItem('app_bike', currentBikeNumber);
             localStorage.setItem('app_chat_id', currentChatId);
-            localStorage.setItem('app_avatar_letter', currentAvatarLetter);
-            localStorage.setItem('app_messages', JSON.stringify(messagesData));
+            localStorage.setItem('app_messages_9771', JSON.stringify(allChatsData["9771"]));
         }
 
         function getTokenMessage() {
@@ -909,15 +1015,6 @@
 
         function updateUIElements() {
             document.getElementById('list-chat-name').innerText = currentChatId;
-            document.getElementById('current-name').innerText = currentChatId;
-            document.getElementById('profile-name-text').innerText = currentChatId;
-            
-            // Set icons for avatars (Default User Icon SVG)
-            const avatarSvg = `<svg viewBox="0 0 24 24" style="width: 28px; height: 28px; fill: #fff;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
-            
-            document.getElementById('list-avatar').innerHTML = avatarSvg;
-            document.getElementById('current-avatar').innerHTML = avatarSvg;
-            
             const previewElement = document.getElementById('preview-token-msg');
             if(previewElement) {
                 previewElement.innerText = `آپ نے ٹوکن نمبر ${currentToken} سے سواری LE...`;
@@ -925,28 +1022,36 @@
         }
 
         // --- Navigation ---
-        function openChat(id, color, avatarText) {
+        function openChat(id, color) {
+            activeChatContext = id;
             document.getElementById('main-screen').style.display = 'none';
             document.getElementById('chat-view').style.display = 'flex';
+            document.getElementById('current-name').innerText = id;
             
             const avatarDiv = document.getElementById('current-avatar');
             avatarDiv.style.background = color;
-
-            if(id === currentChatId) {
-                renderAllMessages();
-            } else {
-                document.getElementById('messages-area').innerHTML = `<div style="text-align:center; color:#888; margin-top:20px;">No messages.</div>`;
-            }
+            
+            renderAllMessages(id);
         }
 
         function closeChat(event) {
             if(event) event.stopPropagation(); 
             document.getElementById('chat-view').style.display = 'none';
             document.getElementById('main-screen').style.display = 'block';
+            activeChatContext = "";
         }
 
-        function openProfile() {
+        function openProfile(id, color) {
+            document.getElementById('profile-name-text').innerText = id;
+            document.getElementById('profile-big-avatar').style.background = color;
             document.getElementById('profile-screen').style.display = 'flex';
+        }
+
+        function openProfileFromChat() {
+            if(!activeChatContext) return;
+            // Get color from current avatar
+            const color = document.getElementById('current-avatar').style.background;
+            openProfile(activeChatContext, color);
         }
 
         function closeProfile() {
@@ -954,53 +1059,59 @@
         }
 
         // --- Chat Rendering ---
-        function renderAllMessages() {
+        function renderAllMessages(chatId) {
             const area = document.getElementById('messages-area');
             area.innerHTML = '';
 
-            messagesData.forEach(msg => {
+            const messages = allChatsData[chatId] || [];
+
+            messages.forEach(msg => {
                 if(msg.type === 'system') {
                     const div = document.createElement('div');
                     div.className = 'sending-text';
                     div.innerHTML = 'Sending with <span>Jazz</span>';
                     area.appendChild(div);
                 } else {
-                    renderBubble(area, msg.type, msg.text, msg.rtl, msg.id);
+                    renderBubble(area, msg.type, msg.text, msg.rtl, msg.id, chatId);
                 }
             });
 
-            // Timestamp
-            const timeDiv = document.createElement('div');
-            timeDiv.className = 'time-stamp';
-            timeDiv.innerText = 'Sunday • 3:14 PM';
-            area.appendChild(timeDiv);
+            // If it's the 9771 chat, add timestamp and token message
+            if(chatId === "9771") {
+                const timeDiv = document.createElement('div');
+                timeDiv.className = 'time-stamp';
+                timeDiv.innerText = 'Sunday • 3:14 PM';
+                area.appendChild(timeDiv);
 
-            // Token Message
-            const tokenDiv = document.createElement('div');
-            tokenDiv.className = 'msg-bubble msg-received rtl-text';
-            tokenDiv.innerText = getTokenMessage();
-            addLongPressEvent(tokenDiv, 'dynamic_token');
-            area.appendChild(tokenDiv);
+                const tokenDiv = document.createElement('div');
+                tokenDiv.className = 'msg-bubble msg-received rtl-text';
+                tokenDiv.innerText = getTokenMessage();
+                // Long press on token msg opens action menu (copy/delete)
+                addLongPressEvent(tokenDiv, 'dynamic_token', tokenDiv.innerText, chatId);
+                area.appendChild(tokenDiv);
+            }
             
             setTimeout(() => { area.scrollTop = area.scrollHeight; }, 50);
         }
 
-        function renderBubble(container, type, text, isRtl, msgId) {
+        function renderBubble(container, type, text, isRtl, msgId, chatId) {
             const div = document.createElement('div');
             div.className = `msg-bubble ${type === 'sent' ? 'msg-sent' : 'msg-received'}`;
             if (isRtl) div.classList.add('rtl-text');
             div.innerText = text;
             
-            if(msgId) addLongPressEvent(div, msgId);
+            if(msgId) addLongPressEvent(div, msgId, text, chatId);
             container.appendChild(div);
         }
 
         // --- Long Press Logic ---
-        let pressTimer;
-        function addLongPressEvent(element, msgId) {
+        function addLongPressEvent(element, msgId, text, chatId) {
             const startPress = () => {
                 pressTimer = setTimeout(() => {
-                    openFloatingMenu();
+                    // Show Action Menu (Copy, Forward, Delete)
+                    selectedMessageId = msgId;
+                    selectedMessageText = text;
+                    document.getElementById('action-menu-overlay').style.display = 'flex';
                 }, 600); 
             };
             const cancelPress = () => {
@@ -1014,42 +1125,54 @@
             element.addEventListener('mouseleave', cancelPress);
         }
 
+        // --- Action Menu Functions ---
+        function closeActionMenu(event) {
+            if(event && event.target !== event.currentTarget) return;
+            document.getElementById('action-menu-overlay').style.display = 'none';
+        }
+        
+        function deleteMessage() {
+            if(selectedMessageId === 'dynamic_token') {
+                showToast("This auto-message cannot be deleted.");
+                closeActionMenu(); return;
+            }
+            
+            allChatsData[activeChatContext] = allChatsData[activeChatContext].filter(m => m.id !== selectedMessageId);
+            saveData();
+            renderAllMessages(activeChatContext);
+            showToast("Message Deleted");
+            closeActionMenu();
+        }
+
+        function copyMessage() {
+            navigator.clipboard.writeText(selectedMessageText).then(() => {
+                showToast("Message Copied!");
+            });
+            closeActionMenu();
+        }
+
+        function forwardMessage() {
+            showToast("Message Forwarded!");
+            closeActionMenu();
+        }
+
+        // --- Floating Profile Menu (Reply/Call/etc) ---
+        // Note: As requested, this only opens if you long press a message in SOME versions, 
+        // but based on latest instruction, the user wants the copy/delete menu. 
+        // If you still want the floating menu on long press, replace the timeout above with openFloatingMenu().
         function openFloatingMenu() {
             document.getElementById('floating-menu').style.display = 'flex';
         }
-
         function closeFloatingMenu(event) {
             if(event.target === document.getElementById('floating-menu')) {
                 document.getElementById('floating-menu').style.display = 'none';
             }
         }
-
-        function replyMessage(event) {
-            if(event) event.stopPropagation();
-            showToast("Reply Mode");
-            closeFloatingMenu({target: document.getElementById('floating-menu')});
-        }
-        
-        function infoMessage(event) {
-            if(event) event.stopPropagation();
-            showToast("Message Info");
-            closeFloatingMenu({target: document.getElementById('floating-menu')});
-        }
-
-        // --- Profile Actions ---
-        function callContact(event) {
-            if(event) event.stopPropagation();
-            window.location.href = `tel:${currentChatId}`;
-        }
-        
-        function addContact(event) {
-            if(event) event.stopPropagation();
-            showToast("Contact Saved Successfully!");
-        }
-        
-        function blockContact() {
-            showToast("Contact Blocked!");
-        }
+        function replyMessage(event) { if(event) event.stopPropagation(); showToast("Reply"); closeFloatingMenu({target: document.getElementById('floating-menu')}); }
+        function callContact(event) { if(event) event.stopPropagation(); window.location.href = `tel:${activeChatContext}`; }
+        function addContact(event) { if(event) event.stopPropagation(); showToast("Contact Saved!"); }
+        function infoMessage(event) { if(event) event.stopPropagation(); showToast("Message Info"); closeFloatingMenu({target: document.getElementById('floating-menu')}); }
+        function blockContact() { showToast("Contact Blocked!"); }
 
         function showToast(message) {
             const toast = document.getElementById("toast");
@@ -1062,12 +1185,15 @@
         function sendCustomMessage() {
             const input = document.getElementById('msg-input');
             const text = input.value.trim();
-            if(!text) return;
+            if(!text || !activeChatContext) return;
 
-            messagesData.push({ id: Date.now(), type: 'sent', text: text });
-            saveData();
+            if(!allChatsData[activeChatContext]) allChatsData[activeChatContext] = [];
+            
+            allChatsData[activeChatContext].push({ id: Date.now(), type: 'sent', text: text });
+            if(activeChatContext === "9771") saveData(); // Only save 9771 to local storage as requested for simplicity
+            
             input.value = '';
-            renderAllMessages();
+            renderAllMessages(activeChatContext);
         }
 
         function handleEnter(e) {
@@ -1106,7 +1232,7 @@
                 saveData();
                 updateUIElements();
                 
-                if(document.getElementById('chat-view').style.display === 'flex') renderAllMessages();
+                if(document.getElementById('chat-view').style.display === 'flex') renderAllMessages(activeChatContext);
                 showToast("Data Updated!");
                 closeAdmin();
             } else {
