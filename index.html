@@ -65,7 +65,6 @@
         .header-icons { display: flex; align-items: center; gap: 20px; }
         .search-icon { font-size: 24px; color: #202124; }
         
-        /* Profile Avatar Image */
         .top-avatar-img {
             width: 32px;
             height: 32px;
@@ -96,7 +95,6 @@
             font-size: 24px;
             margin-right: 15px;
             flex-shrink: 0;
-            text-transform: uppercase;
         }
         
         .chat-details {
@@ -186,6 +184,7 @@
             align-items: center;
             padding: calc(10px + env(safe-area-inset-top)) 15px 10px 15px;
             background: #f8f9fa;
+            cursor: pointer; /* Makes the whole header clickable for profile */
         }
         .back-btn {
             background: none;
@@ -194,6 +193,7 @@
             cursor: pointer;
             margin-right: 15px;
             color: #202124;
+            z-index: 15; /* Prevents click from triggering profile */
         }
         .header-info {
             display: flex;
@@ -220,17 +220,11 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             background-color: #f8f9fa;
             transition: filter 0.3s ease;
         }
         
-        /* Blur effect when menu is open */
-        .blur-background {
-            filter: blur(5px);
-            pointer-events: none;
-        }
-
         .msg-bubble {
             max-width: 80%;
             padding: 12px 16px;
@@ -244,6 +238,7 @@
         .msg-bubble.active-press {
             transform: scale(0.98);
             opacity: 0.9;
+            background-color: #d1d5db !important;
         }
         
         .msg-received {
@@ -260,17 +255,17 @@
             border-bottom-right-radius: 4px;
         }
         
-        /* RTL Support */
         .rtl-text { 
             direction: rtl; 
             text-align: right; 
             font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif; 
             font-size: 18px; 
+            line-height: 1.8;
         }
         
         .sending-text {
             text-align: center;
-            font-size: 12px;
+            font-size: 13px;
             color: #5f6368;
             margin: 10px 0;
         }
@@ -278,23 +273,23 @@
         
         .time-stamp {
             text-align: center;
-            font-size: 12px;
+            font-size: 13px;
             color: #5f6368;
             margin: 15px 0 5px 0;
         }
 
         /* Input Area */
         .chat-input-area {
-            padding: 8px 10px calc(8px + env(safe-area-inset-bottom)) 10px;
+            padding: 10px 15px calc(10px + env(safe-area-inset-bottom)) 15px;
             background: #f8f9fa;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         .plus-icon {
-            font-size: 24px;
+            font-size: 26px;
             color: #5f6368;
-            padding: 0 5px;
+            cursor: pointer;
         }
         .input-wrapper {
             flex: 1;
@@ -302,83 +297,252 @@
             border-radius: 24px;
             display: flex;
             align-items: center;
-            padding: 5px 15px;
+            padding: 8px 15px;
             border: 1px solid #dadce0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
         .chat-input-area input {
             flex: 1;
             border: none;
             outline: none;
             font-size: 16px;
-            padding: 10px 0;
             background: transparent;
         }
-        .input-icons { display: flex; gap: 10px; font-size: 20px; color: #5f6368; }
+        
+        .input-icons { 
+            display: flex; 
+            gap: 12px; 
+            font-size: 20px; 
+            align-items: center;
+        }
+        .input-icons .emoji-icon { color: #fbbc04; }
+        .input-icons .image-icon { color: #1a73e8; }
         
         .chat-input-area button.send-btn {
-            background: #a8dab5;
-            color: #0d652d;
+            background: #c4eed0;
+            color: #0d652d; 
             border: none;
             border-radius: 50%;
-            width: 45px;
-            height: 45px;
+            width: 48px;
+            height: 48px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .chat-input-area button.send-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: #0d652d;
         }
 
-        /* --- Action Menu Overlay (Blur & Popup) --- */
-        .action-menu-overlay {
+        /* --- 3. Long Press Floating Menu (First Image Style) --- */
+        .floating-menu-overlay {
             position: absolute; 
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.2); /* Dim background */
+            background: rgba(0,0,0,0.4); 
             display: none; 
+            flex-direction: column;
             justify-content: center; 
             align-items: center; 
             z-index: 200;
-            backdrop-filter: blur(3px);
+            backdrop-filter: blur(2px);
         }
         
-        .action-menu {
-            background: #fff; 
-            border-radius: 24px; 
-            width: 80%; 
-            max-width: 300px;
-            padding: 15px 0;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-            display: flex; 
-            flex-direction: column;
-            animation: popIn 0.2s ease-out;
+        .floating-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 30px; /* Rounded square like in image */
+            background: #ffca28;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .floating-avatar svg {
+            width: 80px;
+            height: 80px;
+            fill: #fff;
         }
 
-        @keyframes popIn {
-            0% { transform: scale(0.9); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        .floating-actions {
+            background: #fff;
+            border-radius: 40px;
+            display: flex;
+            padding: 10px 20px;
+            gap: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-
-        .action-menu-btn {
-            padding: 16px 20px; 
-            font-size: 16px; 
-            color: #202124; 
-            text-align: left;
-            border: none; 
-            background: transparent; 
+        .floating-action-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 20px;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: #5f6368;
         }
-        .action-menu-btn:active { background: #f1f3f4; }
-        .action-menu-btn.danger { color: #202124; /* Google keeps it black/gray in the list */ }
+        .floating-action-btn:active {
+            background: #f1f3f4;
+        }
+
+        /* --- 4. Profile / Contact Info Screen (Second Image Style) --- */
+        .profile-screen {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            background-color: #f8f9fa;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 300;
+            overflow-y: auto;
+        }
         
-        /* Icons in menu */
-        .action-menu-btn svg {
+        .profile-header {
+            padding: calc(15px + env(safe-area-inset-top)) 20px 15px 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-content {
+            padding: 0 20px 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-big-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #ffca28;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .profile-big-avatar svg {
+            width: 60px;
+            height: 60px;
+            fill: #fff;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            color: #202124;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .profile-top-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            width: 100%;
+            justify-content: center;
+        }
+        .profile-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .profile-action-btn {
+            width: 80px;
+            height: 50px;
+            border-radius: 25px;
+            background: #e6f4ea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0d652d;
+            font-size: 20px;
+        }
+        .profile-action span {
+            font-size: 13px;
+            color: #202124;
+        }
+
+        /* Profile Cards */
+        .profile-card {
+            background: #fff;
+            border-radius: 15px;
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .profile-card-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .profile-card-left .icon {
+            font-size: 20px;
+            color: #5f6368;
+        }
+        .profile-card-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .profile-card-text .title {
+            font-size: 16px;
+            color: #202124;
+            margin-bottom: 2px;
+        }
+        .profile-card-text .subtitle {
+            font-size: 14px;
+            color: #5f6368;
+        }
+        
+        /* Switch Icon Fix */
+        .switch-icon {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #0d652d;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .switch-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* List Items */
+        .profile-list-item {
+            background: #fff;
+            border-radius: 15px;
+            width: 100%;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 16px;
+            color: #202124;
+            cursor: pointer;
+        }
+        .profile-list-item.danger {
+            color: #d93025;
+        }
+        .profile-list-item svg {
             width: 24px;
             height: 24px;
             fill: none;
-            stroke: #5f6368;
+            stroke: currentColor;
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
@@ -388,11 +552,12 @@
         .admin-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.6); display: none;
-            justify-content: center; align-items: center; z-index: 300;
+            justify-content: center; align-items: center; z-index: 400;
         }
         .admin-panel {
             background: #fff; padding: 25px 20px; border-radius: 15px;
             display: flex; flex-direction: column; gap: 12px; width: 90%; max-width: 350px;
+            max-height: 90vh; overflow-y: auto;
         }
         .admin-panel h3 { text-align: center; margin-bottom: 10px; }
         .admin-panel label { font-size: 13px; font-weight: bold; color: #5f6368; }
@@ -416,59 +581,36 @@
 
     <div class="app-container">
         
-        <!-- Main Chat List -->
+        <!-- 1. Main Chat List -->
         <div class="main-screen" id="main-screen">
             <div class="top-header">
                 <h1><span>Google</span> Messages</h1>
                 <div class="header-icons">
                     <span class="search-icon">🔍</span>
-                    <!-- User provided Blue Avatar Image -->
                     <img src="https://i.ibb.co/8gvbm3XM/160165.jpg" class="top-avatar-img" alt="Profile">
                 </div>
             </div>
 
-            <div class="chat-item" onclick="openChat('0303 0300000', '#ab47bc', '03030300000')">
-                <div class="avatar-circle" style="background: #ab47bc;">👤</div>
+            <div class="chat-item" onclick="openChat('0303 0300000', '#ab47bc', '0')">
+                <div class="avatar-circle" style="background: #ab47bc;">0</div>
                 <div class="chat-details">
                     <div class="chat-top">
                         <span class="chat-name">0303 0300000</span>
-                        <div class="chat-meta"><span>6 min</span><span class="unread-badge">1</span></div>
+                        <div class="chat-meta"><span>6 min</span></div>
                     </div>
-                    <div class="chat-msg rtl">معزز صارف، کیا آپ اپنے علاقے کے موسم، فصلوں اور جان...</div>
+                    <div class="chat-msg rtl">معزز صارف، کیا آپ اپنے علاقے کے موسم...</div>
                 </div>
             </div>
 
-            <div class="chat-item" onclick="openChat('6633', '#26c6da', '6633')">
-                <div class="avatar-circle" style="background: #26c6da;">👤</div>
+            <!-- Target Chat -->
+            <div class="chat-item" onclick="openChat(currentChatId, '#ffca28', currentAvatarLetter)">
+                <div class="avatar-circle" id="list-avatar" style="background: #ffca28;">9</div>
                 <div class="chat-details">
                     <div class="chat-top">
-                        <span class="chat-name">6633</span>
-                        <div class="chat-meta"><span>7:10 PM</span><span class="unread-badge">1</span></div>
+                        <span class="chat-name" id="list-chat-name">9771</span>
+                        <div class="chat-meta"><span></span></div>
                     </div>
-                    <div class="chat-msg">Jazz se Salam! Pakistan mein SMS jawab muft hain. Kya aap ka ...</div>
-                </div>
-            </div>
-
-            <div class="chat-item" onclick="openChat('JAZZ 5G', '#ffca28', 'JAZZ5G')">
-                <div class="avatar-circle" style="background: #ffca28;">👤</div>
-                <div class="chat-details">
-                    <div class="chat-top">
-                        <span class="chat-name">JAZZ 5G</span>
-                        <div class="chat-meta"><span>6:03 PM</span></div>
-                    </div>
-                    <div class="chat-msg">1GBs MUFT DATA! Ap ko 2 din kay...</div>
-                </div>
-            </div>
-
-            <!-- Target Chat 9771 -->
-            <div class="chat-item" onclick="openChat('9771', '#ffca28', '9771')">
-                <div class="avatar-circle" style="background: #ffca28;">👤</div>
-                <div class="chat-details">
-                    <div class="chat-top">
-                        <span class="chat-name">9771</span>
-                        <div class="chat-meta" id="preview-meta"><span></span></div>
-                    </div>
-                    <div class="chat-msg rtl" id="preview-token-msg">آپ نے ٹوکن نمبر 9641257094 سے سواری LE...</div>
+                    <div class="chat-msg rtl" id="preview-token-msg">آپ ٹوکن نمبر 7715583817 سے...</div>
                 </div>
             </div>
 
@@ -476,12 +618,13 @@
 
         <button class="fab" id="start-chat-btn">💬 Start chat</button>
 
-        <!-- Inner Chat View -->
+        <!-- 2. Inner Chat View -->
         <div class="chat-view" id="chat-view">
-            <div class="chat-header">
-                <button class="back-btn" onclick="closeChat()">←</button>
+            <!-- Clickable Header to open Profile -->
+            <div class="chat-header" onclick="openProfile()">
+                <button class="back-btn" onclick="closeChat(event)">←</button>
                 <div class="header-info">
-                    <div class="avatar-circle" id="current-avatar" style="width: 40px; height: 40px; font-size: 20px; margin-right:0;">👤</div>
+                    <div class="avatar-circle" id="current-avatar" style="width: 40px; height: 40px; font-size: 22px; margin-right:0; background: #ffca28;">9</div>
                     <h3 id="current-name">9771</h3>
                 </div>
                 <div class="header-icons-right">
@@ -490,62 +633,117 @@
                 </div>
             </div>
             
-            <!-- Messages Area with Blur ID -->
             <div class="messages-area" id="messages-area">
                 <!-- Messages load here -->
             </div>
 
-            <!-- Bottom Input Box -->
             <div class="chat-input-area">
                 <div class="plus-icon">⊕</div>
                 <div class="input-wrapper">
                     <input type="text" id="msg-input" placeholder="2 Jazz • Text message" onkeypress="handleEnter(event)">
                     <div class="input-icons">
-                        <span>😊</span>
-                        <span>🖼️</span>
+                        <span class="emoji-icon">😊</span>
+                        <span class="image-icon">🖼️</span>
                     </div>
                 </div>
                 <button class="send-btn" onclick="sendCustomMessage()">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                 </button>
             </div>
         </div>
-    </div>
 
-    <!-- Action Menu (Google Messages Style) -->
-    <div class="action-menu-overlay" id="action-menu-overlay" onclick="closeActionMenu(event)">
-        <div class="action-menu" onclick="event.stopPropagation()">
-            <button class="action-menu-btn" onclick="forwardMessage()">
-                <svg viewBox="0 0 24 24"><path d="M15 17l5-5-5-5M4 18v-7a4 4 0 014-4h12"></path></svg>
-                Forward
-            </button>
-            <button class="action-menu-btn" onclick="copyMessage()">
-                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg>
-                Copy
-            </button>
-            <button class="action-menu-btn" onclick="starMessage()">
-                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                Star
-            </button>
-            <button class="action-menu-btn" onclick="deleteMessage()">
-                <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path></svg>
-                Delete
-            </button>
-            <button class="action-menu-btn" onclick="selectMore()">
-                <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path></svg>
-                Select more
-            </button>
-            <button class="action-menu-btn" onclick="showInfo()">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                Info
-            </button>
+        <!-- 3. Floating Long Press Menu -->
+        <div class="floating-menu-overlay" id="floating-menu" onclick="closeFloatingMenu(event)">
+            <div class="floating-avatar">
+                <!-- User SVG Icon -->
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <div class="floating-actions">
+                <button class="floating-action-btn" onclick="replyMessage()">💬</button>
+                <button class="floating-action-btn" onclick="callContact()">📞</button>
+                <button class="floating-action-btn" onclick="addContact()">👤+</button>
+                <button class="floating-action-btn" onclick="infoMessage()">ℹ️</button>
+            </div>
         </div>
+
+        <!-- 4. Profile / Contact Info Screen -->
+        <div class="profile-screen" id="profile-screen">
+            <div class="profile-header">
+                <button class="back-btn" onclick="closeProfile()">←</button>
+            </div>
+            
+            <div class="profile-content">
+                <div class="profile-big-avatar">
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </div>
+                
+                <div class="profile-name" id="profile-name-text">9771</div>
+
+                <div class="profile-top-actions">
+                    <div class="profile-action" onclick="callContact()">
+                        <div class="profile-action-btn">📞</div>
+                        <span>Call</span>
+                    </div>
+                    <div class="profile-action" onclick="addContact()">
+                        <div class="profile-action-btn">👤+</div>
+                        <span>Add contact</span>
+                    </div>
+                    <div class="profile-action">
+                        <div class="profile-action-btn">🔍</div>
+                        <span>Search</span>
+                    </div>
+                </div>
+
+                <!-- Sending with Card (Fix measurement) -->
+                <div class="profile-card">
+                    <div class="profile-card-left">
+                        <div class="icon">💳</div>
+                        <div class="profile-card-text">
+                            <span class="title">2 Jazz</span>
+                            <span class="subtitle">0329 1667662</span>
+                        </div>
+                    </div>
+                    <div class="switch-icon">
+                        <svg viewBox="0 0 24 24"><path d="M7 10l5-5 5 5H7zm0 4l5 5 5-5H7z"/></svg>
+                        Switch
+                    </div>
+                </div>
+
+                <!-- List Items -->
+                <div class="profile-list-item">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
+                    Chat theme
+                </div>
+                <div class="profile-list-item">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    Snooze chat
+                </div>
+                <div class="profile-list-item">
+                    <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    Notifications
+                </div>
+                <div class="profile-list-item">
+                    <svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+                    Archive
+                </div>
+                <div class="profile-list-item danger" onclick="blockContact()">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                    Block & report spam
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
-    <!-- Admin Panel Overlay -->
+    <!-- Admin Panel -->
     <div class="admin-overlay" id="admin-overlay">
         <div class="admin-panel">
             <h3>Admin Settings</h3>
+            <label>Chat Number / Name</label>
+            <input type="text" id="admin-chat-id" placeholder="Enter chat number">
+            <label>Avatar Letter</label>
+            <input type="text" id="admin-avatar-letter" placeholder="Enter 1 letter or number" maxlength="2">
             <label>Update Bike/Sawari Number</label>
             <input type="text" id="bike-input" placeholder="Enter bike number">
             <label>Update Token Number</label>
@@ -561,18 +759,18 @@
 
     <script>
         // --- Data & State ---
-        let currentToken = "9641257094";
-        let currentBikeNumber = "LEQ-16-7403";
-        let selectedMessageId = null;
-        let selectedMessageText = "";
+        let currentToken = "7715583817";
+        let currentBikeNumber = "LEX-11-2259";
+        let currentChatId = "9771";
+        let currentAvatarLetter = "9";
 
         let defaultMessages = [
-            { id: 1, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
-            { id: 2, type: 'sent', text: 'REG 3230373410243 LEX2278 P 07052011' },
-            { id: 3, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
-            { id: 4, type: 'sent', text: 'REG 3230373410243 LEX2280 P 07052011' },
-            { id: 5, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
-            { id: 6, type: 'received', text: 'رجسٹریشن ناکام۔ 8 گھنٹے بعد دوبارہ کوشش کریں۔', rtl: true }
+            { id: 1, type: 'received', text: 'آپ ٹوکن نمبر 7715583817 سے سواری رجسٹر ہو سکتی ہے۔', rtl: true },
+            { id: 2, type: 'sent', text: 'REG 3230373410243 LEX2277 P 09052011' },
+            { id: 3, type: 'received', text: 'رجسٹریشن ناکام۔ 8 گھنٹے بعد دوبارہ کوشش کریں۔', rtl: true },
+            { id: 4, type: 'system', text: 'Sending with Jazz' },
+            { id: 5, type: 'received', text: 'رجسٹریشن کامیاب! فائل ریلیف ٹوکن کے لئے TOK لکھ کر بھیجیں۔', rtl: true },
+            { id: 6, type: 'sent', text: 'TOK' }
         ];
 
         let messagesData = [];
@@ -580,22 +778,29 @@
         function loadData() {
             const savedToken = localStorage.getItem('app_token');
             const savedBike = localStorage.getItem('app_bike');
+            const savedChatId = localStorage.getItem('app_chat_id');
+            const savedAvatar = localStorage.getItem('app_avatar_letter');
             const savedMessages = localStorage.getItem('app_messages');
 
             if (savedToken) currentToken = savedToken;
             if (savedBike) currentBikeNumber = savedBike;
+            if (savedChatId) currentChatId = savedChatId;
+            if (savedAvatar) currentAvatarLetter = savedAvatar;
             
             if (savedMessages) {
                 messagesData = JSON.parse(savedMessages);
             } else {
                 messagesData = [...defaultMessages];
             }
-            updatePreviewText();
+            
+            updateUIElements();
         }
 
         function saveData() {
             localStorage.setItem('app_token', currentToken);
             localStorage.setItem('app_bike', currentBikeNumber);
+            localStorage.setItem('app_chat_id', currentChatId);
+            localStorage.setItem('app_avatar_letter', currentAvatarLetter);
             localStorage.setItem('app_messages', JSON.stringify(messagesData));
         }
 
@@ -603,42 +808,63 @@
             return `آپ نے ٹوکن نمبر ${currentToken} سے سواری ${currentBikeNumber} کے لیے پٹرول پر 500 روپے ریلیف حاصل کرلیا ہے۔ آپ اپنا اگلا ٹوکن 01-Nov کو بنا سکتے ہیں۔`;
         }
 
-        function updatePreviewText() {
+        function updateUIElements() {
+            document.getElementById('list-chat-name').innerText = currentChatId;
+            document.getElementById('list-avatar').innerText = currentAvatarLetter;
+            document.getElementById('current-name').innerText = currentChatId;
+            document.getElementById('current-avatar').innerText = currentAvatarLetter;
+            document.getElementById('profile-name-text').innerText = currentChatId;
+            
             const previewElement = document.getElementById('preview-token-msg');
             if(previewElement) {
-                previewElement.innerText = `آپ نے ٹوکن نمبر ${currentToken} سے سواری LE...`;
+                previewElement.innerText = `آپ ٹوکن نمبر ${currentToken} سے سواری...`;
             }
         }
 
-        // --- Chat Functions ---
+        // --- Navigation ---
         function openChat(id, color, avatarText) {
             document.getElementById('main-screen').style.display = 'none';
             document.getElementById('chat-view').style.display = 'flex';
-            document.getElementById('current-name').innerText = id;
             
             const avatarDiv = document.getElementById('current-avatar');
-            avatarDiv.innerText = avatarText.charAt(0).toUpperCase();
             avatarDiv.style.background = color;
 
-            if(id === '9771') {
+            if(id === currentChatId) {
                 renderAllMessages();
             } else {
-                document.getElementById('messages-area').innerHTML = `<div style="text-align:center; color:#888; margin-top:20px;">No messages to display.</div>`;
+                document.getElementById('messages-area').innerHTML = `<div style="text-align:center; color:#888; margin-top:20px;">No messages.</div>`;
             }
         }
 
+        function closeChat(event) {
+            if(event) event.stopPropagation(); // Prevents opening profile when clicking back
+            document.getElementById('chat-view').style.display = 'none';
+            document.getElementById('main-screen').style.display = 'block';
+        }
+
+        function openProfile() {
+            document.getElementById('profile-screen').style.display = 'flex';
+        }
+
+        function closeProfile() {
+            document.getElementById('profile-screen').style.display = 'none';
+        }
+
+        // --- Chat Rendering ---
         function renderAllMessages() {
             const area = document.getElementById('messages-area');
             area.innerHTML = '';
 
             messagesData.forEach(msg => {
-                renderBubble(area, msg.type, msg.text, msg.rtl, msg.id);
+                if(msg.type === 'system') {
+                    const div = document.createElement('div');
+                    div.className = 'sending-text';
+                    div.innerHTML = 'Sending with <span>Jazz</span>';
+                    area.appendChild(div);
+                } else {
+                    renderBubble(area, msg.type, msg.text, msg.rtl, msg.id);
+                }
             });
-
-            const sendingDiv = document.createElement('div');
-            sendingDiv.className = 'sending-text';
-            sendingDiv.innerHTML = 'Sending with <span>Jazz</span>';
-            area.appendChild(sendingDiv);
 
             const timeDiv = document.createElement('div');
             timeDiv.className = 'time-stamp';
@@ -648,7 +874,7 @@
             const tokenDiv = document.createElement('div');
             tokenDiv.className = 'msg-bubble msg-received rtl-text';
             tokenDiv.innerText = getTokenMessage();
-            addLongPressEvent(tokenDiv, 'dynamic_token', tokenDiv.innerText);
+            addLongPressEvent(tokenDiv, 'dynamic_token');
             area.appendChild(tokenDiv);
             
             setTimeout(() => { area.scrollTop = area.scrollHeight; }, 50);
@@ -660,19 +886,19 @@
             if (isRtl) div.classList.add('rtl-text');
             div.innerText = text;
             
-            if(msgId) addLongPressEvent(div, msgId, text);
+            if(msgId) addLongPressEvent(div, msgId);
             container.appendChild(div);
         }
 
-        // --- Long Press Logic ---
+        // --- Long Press Logic (Floating Menu) ---
         let pressTimer;
-        function addLongPressEvent(element, msgId, text) {
+        function addLongPressEvent(element, msgId) {
             const startPress = () => {
                 element.classList.add('active-press');
                 pressTimer = setTimeout(() => {
                     element.classList.remove('active-press');
-                    openActionMenu(msgId, text);
-                }, 800); // 800ms long press
+                    openFloatingMenu();
+                }, 600); 
             };
             const cancelPress = () => {
                 element.classList.remove('active-press');
@@ -686,66 +912,35 @@
             element.addEventListener('mouseleave', cancelPress);
         }
 
-        // --- Action Menu Logic ---
-        function openActionMenu(msgId, text) {
-            selectedMessageId = msgId;
-            selectedMessageText = text;
-            
-            // Apply Blur to Background
-            document.getElementById('messages-area').classList.add('blur-background');
-            document.getElementById('action-menu-overlay').style.display = 'flex';
+        function openFloatingMenu() {
+            document.getElementById('floating-menu').style.display = 'flex';
         }
 
-        function closeActionMenu(event) {
-            if (event && event.target !== event.currentTarget) return;
-            
-            // Remove Blur
-            document.getElementById('messages-area').classList.remove('blur-background');
-            document.getElementById('action-menu-overlay').style.display = 'none';
-            selectedMessageId = null;
-            selectedMessageText = "";
-        }
-
-        function deleteMessage() {
-            if(selectedMessageId === 'dynamic_token') {
-                showToast("This auto-message cannot be deleted.");
-                closeActionMenu(); return;
+        function closeFloatingMenu(event) {
+            if(event.target === document.getElementById('floating-menu')) {
+                document.getElementById('floating-menu').style.display = 'none';
             }
-            messagesData = messagesData.filter(m => m.id !== selectedMessageId);
-            saveData();
-            renderAllMessages();
-            showToast("Message Deleted");
-            closeActionMenu();
         }
 
-        function copyMessage() {
-            // Copy to clipboard
-            navigator.clipboard.writeText(selectedMessageText).then(() => {
-                showToast("Message Copied!");
-            }).catch(err => {
-                showToast("Failed to copy");
-            });
-            closeActionMenu();
+        // Floating Menu Actions
+        function replyMessage() {
+            showToast("Reply Mode");
+            closeFloatingMenu({target: document.getElementById('floating-menu')});
+        }
+        function infoMessage() {
+            showToast("Message Info");
+            closeFloatingMenu({target: document.getElementById('floating-menu')});
         }
 
-        function forwardMessage() {
-            showToast("Message Forwarded!");
-            closeActionMenu();
+        // --- Profile Actions ---
+        function callContact() {
+            window.location.href = `tel:${currentChatId}`;
         }
-
-        function starMessage() {
-            showToast("Message Starred ⭐");
-            closeActionMenu();
+        function addContact() {
+            showToast("Contact Added!");
         }
-
-        function selectMore() {
-            showToast("Select More Mode");
-            closeActionMenu();
-        }
-
-        function showInfo() {
-            showToast("Info: Delivered to 9771");
-            closeActionMenu();
+        function blockContact() {
+            showToast("Contact Blocked!");
         }
 
         function showToast(message) {
@@ -755,11 +950,7 @@
             setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
         }
 
-        function closeChat() {
-            document.getElementById('chat-view').style.display = 'none';
-            document.getElementById('main-screen').style.display = 'block';
-        }
-
+        // --- Sending Message ---
         function sendCustomMessage() {
             const input = document.getElementById('msg-input');
             const text = input.value.trim();
@@ -775,7 +966,7 @@
             if(e.key === 'Enter') sendCustomMessage();
         }
 
-        // --- Admin Panel Logic ---
+        // --- Admin Panel ---
         let clickCount = 0;
         document.getElementById('start-chat-btn').addEventListener('click', function() {
             clickCount++;
@@ -787,6 +978,8 @@
             document.getElementById('admin-overlay').style.display = 'flex';
             document.getElementById('token-input').value = currentToken;
             document.getElementById('bike-input').value = currentBikeNumber;
+            document.getElementById('admin-chat-id').value = currentChatId;
+            document.getElementById('admin-avatar-letter').value = currentAvatarLetter;
         }
 
         function closeAdmin() {
@@ -796,15 +989,23 @@
         function updateData() {
             const newToken = document.getElementById('token-input').value.trim();
             const newBike = document.getElementById('bike-input').value.trim();
+            const newChatId = document.getElementById('admin-chat-id').value.trim();
+            const newAvatar = document.getElementById('admin-avatar-letter').value.trim();
             
-            if(newToken && newBike) {
+            if(newToken && newBike && newChatId && newAvatar) {
                 currentToken = newToken;
                 currentBikeNumber = newBike;
+                currentChatId = newChatId;
+                currentAvatarLetter = newAvatar;
+                
                 saveData();
-                updatePreviewText();
+                updateUIElements();
+                
                 if(document.getElementById('chat-view').style.display === 'flex') renderAllMessages();
                 showToast("Data Updated!");
                 closeAdmin();
+            } else {
+                showToast("Please fill all fields");
             }
         }
 
