@@ -2,138 +2,181 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#f8f9fa">
     <title>Messages</title>
+    <link rel="manifest" href="manifest.json">
     <style>
-        /* --- Global & Reset Styles --- */
+        /* --- Global Styles --- */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none; /* Disables default iOS callout */
-            user-select: none; /* Prevents text selection glitch */
         }
         body {
-            background-color: #fff;
+            background-color: #f1f3f4;
             display: flex;
             justify-content: center;
             height: 100vh;
-            height: 100dvh; /* For modern mobile browsers */
+            height: 100dvh;
             overflow: hidden;
         }
 
-        /* --- App Container (Responsive) --- */
+        /* --- App Container --- */
         .app-container {
             width: 100%;
-            max-width: 500px; /* Max width for tablets/desktop */
-            background-color: #fff;
+            max-width: 500px;
+            background-color: #f8f9fa;
             height: 100%;
             display: flex;
             flex-direction: column;
             position: relative;
+            overflow: hidden;
         }
 
-        /* --- Header (List View) --- */
-        .header {
-            /* Margin-top added to push it down below mobile status bar/notch */
+        /* --- 1. Main Chat List View --- */
+        .main-screen {
+            flex: 1;
+            background-color: #f8f9fa;
+            overflow-y: auto;
+            padding-bottom: 80px;
+            border-radius: 20px 20px 0 0;
+            margin-top: 10px;
+        }
+        
+        .top-header {
             padding: calc(15px + env(safe-area-inset-top)) 20px 15px 20px; 
             display: flex;
             align-items: center;
-            background: #fff;
-            border-bottom: 1px solid #e0e0e0;
-            position: relative;
+            justify-content: space-between;
+            background: #f8f9fa;
         }
-        .header h1 {
+        .top-header h1 {
             font-size: 22px;
             font-weight: 400;
             color: #202124;
             letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
         }
-        .header h1 span { 
-            font-weight: 600; /* Bold for Google */
-            color: #202124; 
-        }
+        .top-header h1 span { font-weight: 600; color: #202124; margin-right: 5px; }
+        .header-icons { display: flex; align-items: center; gap: 20px; }
+        .search-icon { font-size: 24px; color: #202124; }
         
-        .top-avatar {
-            position: absolute;
-            right: 20px;
+        /* Profile Avatar Image */
+        .top-avatar-img {
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: #00695c;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            border: 2px solid #1a73e8;
+            object-fit: cover;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 2px #1a73e8;
         }
 
-        /* --- Chat List View --- */
-        .chat-list {
-            flex: 1;
-            overflow-y: auto;
-            padding-bottom: 80px;
-        }
+        /* Chat List Items */
         .chat-item {
             display: flex;
-            padding: 12px 15px;
+            padding: 15px 20px;
             cursor: pointer;
-            transition: background 0.2s;
+            align-items: center;
         }
-        .chat-item:hover, .chat-item:active {
-            background-color: #f8f9fa;
-        }
-        .avatar {
-            width: 48px;
-            height: 48px;
+        .chat-item:active { background-color: #e8eaed; }
+        
+        .avatar-circle {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-weight: bold;
-            font-size: 22px;
+            font-weight: 500;
+            font-size: 24px;
             margin-right: 15px;
             flex-shrink: 0;
+            text-transform: uppercase;
         }
+        
         .chat-details {
             flex: 1;
-            border-bottom: 1px solid #f1f3f4;
-            padding-bottom: 12px;
             min-width: 0;
         }
         .chat-top {
             display: flex;
             justify-content: space-between;
             margin-bottom: 4px;
+            align-items: center;
         }
         .chat-name {
             font-weight: 500;
             color: #202124;
-            font-size: 16px;
-        }
-        .chat-time {
-            font-size: 12px;
-            color: #5f6368;
-        }
-        .chat-msg {
-            font-size: 14px;
-            color: #5f6368;
+            font-size: 17px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        .chat-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #5f6368;
+        }
+        .unread-badge {
+            background-color: #1e8e3e;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .chat-msg {
+            font-size: 15px;
+            color: #5f6368;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.3;
+        }
+        .chat-msg.rtl {
+            direction: rtl;
+            text-align: right;
+            font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif;
+            font-size: 17px;
+        }
 
-        /* --- Chat View (Inside) --- */
+        /* --- FAB Button --- */
+        .fab {
+            position: absolute;
+            bottom: calc(20px + env(safe-area-inset-bottom));
+            right: 20px;
+            background-color: #c4eed0;
+            color: #0d652d;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 5;
+        }
+
+        /* --- 2. Chat View (Inner Screen) --- */
         .chat-view {
             display: none;
             flex-direction: column;
             height: 100%;
-            background-color: #fff;
+            background-color: #f8f9fa;
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             z-index: 10;
@@ -141,95 +184,116 @@
         .chat-header {
             display: flex;
             align-items: center;
-            padding: calc(10px + env(safe-area-inset-top)) 15px 10px 15px; /* Safe area top */
-            background: #fff;
-            border-bottom: 1px solid #e0e0e0;
+            padding: calc(10px + env(safe-area-inset-top)) 15px 10px 15px;
+            background: #f8f9fa;
         }
         .back-btn {
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 26px;
             cursor: pointer;
             margin-right: 15px;
             color: #202124;
         }
-        .chat-header-info h3 {
-            font-size: 16px;
+        .header-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+        .header-info h3 {
+            font-size: 18px;
             color: #202124;
             font-weight: 500;
         }
-        
+        .header-icons-right {
+            display: flex;
+            gap: 20px;
+            font-size: 20px;
+            color: #202124;
+        }
+
+        /* Messages Area */
         .messages-area {
             flex: 1;
             padding: 15px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 6px; /* Slight gap between messages */
-            background-color: #fff;
+            gap: 6px;
+            background-color: #f8f9fa;
+            transition: filter 0.3s ease;
         }
         
+        /* Blur effect when menu is open */
+        .blur-background {
+            filter: blur(5px);
+            pointer-events: none;
+        }
+
         .msg-bubble {
             max-width: 80%;
-            padding: 10px 15px;
-            border-radius: 18px;
+            padding: 12px 16px;
+            border-radius: 20px;
             font-size: 15px;
             line-height: 1.4;
             word-wrap: break-word;
             cursor: pointer;
-            transition: background-color 0.1s;
-            /* Glitch fix: Ensure text doesn't get selected on long press */
-            -webkit-user-select: none;
-            user-select: none;
+            transition: transform 0.1s;
         }
         .msg-bubble.active-press {
-            background-color: #d1d5db !important; 
+            transform: scale(0.98);
+            opacity: 0.9;
         }
         
         .msg-received {
-            background-color: #f1f3f4;
+            background-color: #e8eaed;
             color: #202124;
             align-self: flex-start;
             border-bottom-left-radius: 4px;
         }
         
         .msg-sent {
-            background-color: #b5e7a0; /* Exact light green */
+            background-color: #b5e7a0; 
             color: #202124;
             align-self: flex-end;
             border-bottom-right-radius: 4px;
         }
         
-        /* RTL Support for Urdu */
+        /* RTL Support */
         .rtl-text { 
             direction: rtl; 
             text-align: right; 
             font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif; 
-            font-size: 17px; 
+            font-size: 18px; 
         }
         
         .sending-text {
             text-align: center;
             font-size: 12px;
             color: #5f6368;
-            margin: 5px 0;
+            margin: 10px 0;
         }
         .sending-text span { text-decoration: underline; color: #5f6368; }
-        .jazz-text { color: #8e24aa; font-size: 13px; margin-left: 5px; margin-bottom: 10px; font-weight: 500;}
+        
+        .time-stamp {
+            text-align: center;
+            font-size: 12px;
+            color: #5f6368;
+            margin: 15px 0 5px 0;
+        }
 
-        /* --- Input Area --- */
+        /* Input Area */
         .chat-input-area {
-            padding: 8px 10px calc(8px + env(safe-area-inset-bottom)) 10px; /* Safe area bottom */
-            background: #f1f3f4;
+            padding: 8px 10px calc(8px + env(safe-area-inset-bottom)) 10px;
+            background: #f8f9fa;
             display: flex;
             align-items: center;
             gap: 10px;
-            border-top: 1px solid #e0e0e0;
         }
         .plus-icon {
             font-size: 24px;
             color: #5f6368;
-            cursor: pointer;
             padding: 0 5px;
         }
         .input-wrapper {
@@ -245,20 +309,15 @@
             flex: 1;
             border: none;
             outline: none;
-            font-size: 15px;
-            padding: 8px 0;
+            font-size: 16px;
+            padding: 10px 0;
             background: transparent;
         }
-        .smile-icon {
-            font-size: 20px;
-            color: #5f6368;
-            margin-left: 10px;
-        }
+        .input-icons { display: flex; gap: 10px; font-size: 20px; color: #5f6368; }
         
-        /* Send Button (No Mic) */
         .chat-input-area button.send-btn {
-            background: #1a73e8;
-            color: white;
+            background: #a8dab5;
+            color: #0d652d;
             border: none;
             border-radius: 50%;
             width: 45px;
@@ -268,246 +327,229 @@
             align-items: center;
             justify-content: center;
             font-size: 18px;
-            flex-shrink: 0;
-            transition: background 0.2s;
-        }
-        .chat-input-area button.send-btn:active {
-            background: #1557b0;
         }
 
-        /* --- Floating Action Button --- */
-        .fab {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background-color: #a8dab5;
-            color: #202124;
-            border: none;
-            padding: 15px 20px;
-            border-radius: 25px;
-            font-weight: 500;
-            font-size: 16px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            z-index: 5;
-        }
-
-        /* --- Admin Panel --- */
-        .admin-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.6);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-        }
-        .admin-panel {
-            background: #fff;
-            padding: 25px 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 90%;
-            max-width: 350px;
-        }
-        .admin-panel h3 { text-align: center; color: #202124; margin-bottom: 10px; font-size: 18px;}
-        .admin-panel label { font-size: 13px; color: #5f6368; font-weight: bold; margin-bottom: -5px;}
-        .admin-panel input {
-            padding: 12px;
-            border: 1px solid #dadce0;
-            border-radius: 8px;
-            font-size: 15px;
-            width: 100%;
-            background: #f8f9fa;
-        }
-        .admin-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        .admin-buttons button {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-        }
-        .btn-save { background: #1a73e8; color: white; }
-        .btn-close { background: #f1f3f4; color: #5f6368; }
-
-        /* --- Action Menu (Delete/Forward) --- */
+        /* --- Action Menu Overlay (Blur & Popup) --- */
         .action-menu-overlay {
-            position: fixed;
+            position: absolute; 
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.3);
-            display: none;
-            justify-content: center;
-            align-items: center;
+            background: rgba(0,0,0,0.2); /* Dim background */
+            display: none; 
+            justify-content: center; 
+            align-items: center; 
             z-index: 200;
+            backdrop-filter: blur(3px);
         }
+        
         .action-menu {
-            background: #fff;
-            border-radius: 12px;
-            width: 80%;
-            max-width: 280px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            display: flex;
+            background: #fff; 
+            border-radius: 24px; 
+            width: 80%; 
+            max-width: 300px;
+            padding: 15px 0;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            display: flex; 
             flex-direction: column;
             animation: popIn 0.2s ease-out;
         }
+
         @keyframes popIn {
             0% { transform: scale(0.9); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
+
         .action-menu-btn {
-            padding: 15px;
-            font-size: 16px;
-            color: #202124;
+            padding: 16px 20px; 
+            font-size: 16px; 
+            color: #202124; 
             text-align: left;
-            border: none;
-            background: transparent;
-            border-bottom: 1px solid #f1f3f4;
+            border: none; 
+            background: transparent; 
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 20px;
         }
-        .action-menu-btn:active { background: #f8f9fa; }
-        .action-menu-btn.danger { color: #d93025; }
-        .action-menu-btn:last-child { border-bottom: none; }
+        .action-menu-btn:active { background: #f1f3f4; }
+        .action-menu-btn.danger { color: #202124; /* Google keeps it black/gray in the list */ }
+        
+        /* Icons in menu */
+        .action-menu-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: #5f6368;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
 
-        /* --- Toast Notification --- */
+        /* --- Admin Panel --- */
+        .admin-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6); display: none;
+            justify-content: center; align-items: center; z-index: 300;
+        }
+        .admin-panel {
+            background: #fff; padding: 25px 20px; border-radius: 15px;
+            display: flex; flex-direction: column; gap: 12px; width: 90%; max-width: 350px;
+        }
+        .admin-panel h3 { text-align: center; margin-bottom: 10px; }
+        .admin-panel label { font-size: 13px; font-weight: bold; color: #5f6368; }
+        .admin-panel input { padding: 12px; border: 1px solid #dadce0; border-radius: 8px; font-size: 15px; }
+        .admin-buttons { display: flex; gap: 10px; margin-top: 15px; }
+        .admin-buttons button { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;}
+        .btn-save { background: #1a73e8; color: white; }
+        .btn-close { background: #f1f3f4; color: #5f6368; }
+
+        /* --- Toast --- */
         #toast {
-            visibility: hidden;
-            min-width: 200px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 25px;
-            padding: 12px 20px;
-            position: fixed;
-            z-index: 1000;
-            left: 50%;
-            bottom: 30px;
-            transform: translateX(-50%);
-            font-size: 14px;
-            opacity: 0;
-            transition: opacity 0.3s, bottom 0.3s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            visibility: hidden; min-width: 200px; background-color: #333; color: #fff;
+            text-align: center; border-radius: 25px; padding: 12px 20px; position: fixed;
+            z-index: 1000; left: 50%; bottom: 30px; transform: translateX(-50%);
+            font-size: 14px; opacity: 0; transition: opacity 0.3s, bottom 0.3s;
         }
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-            bottom: 50px;
-        }
+        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
     </style>
 </head>
 <body>
 
     <div class="app-container">
         
-        <!-- Chat List Screen -->
-        <div class="chat-list" id="main-list">
-            <div class="header">
+        <!-- Main Chat List -->
+        <div class="main-screen" id="main-screen">
+            <div class="top-header">
                 <h1><span>Google</span> Messages</h1>
-                <div class="top-avatar">a</div>
-            </div>
-
-            <div class="chat-item" onclick="openChat('8558', '#4dd0e1')">
-                <div class="avatar" style="background: #4dd0e1;">👤</div>
-                <div class="chat-details">
-                    <div class="chat-top"><span class="chat-name">8558</span><span class="chat-time">41 min</span></div>
-                    <div class="chat-msg">Your account is currently in a could...</div>
+                <div class="header-icons">
+                    <span class="search-icon">🔍</span>
+                    <!-- User provided Blue Avatar Image -->
+                    <img src="https://i.ibb.co/8gvbm3XM/160165.jpg" class="top-avatar-img" alt="Profile">
                 </div>
             </div>
 
-            <div class="chat-item" onclick="openChat('7911', '#ffb74d')">
-                <div class="avatar" style="background: #ffb74d;">👤</div>
+            <div class="chat-item" onclick="openChat('0303 0300000', '#ab47bc', '03030300000')">
+                <div class="avatar-circle" style="background: #ab47bc;">👤</div>
                 <div class="chat-details">
-                    <div class="chat-top"><span class="chat-name">7911</span><span class="chat-time">57 min</span></div>
-                    <div class="chat-msg" style="color:#d93025;">⚠ You: V</div>
+                    <div class="chat-top">
+                        <span class="chat-name">0303 0300000</span>
+                        <div class="chat-meta"><span>6 min</span><span class="unread-badge">1</span></div>
+                    </div>
+                    <div class="chat-msg rtl">معزز صارف، کیا آپ اپنے علاقے کے موسم، فصلوں اور جان...</div>
                 </div>
             </div>
 
-            <div class="chat-item" onclick="openChat('667', '#ffb74d')">
-                <div class="avatar" style="background: #ffb74d;">👤</div>
+            <div class="chat-item" onclick="openChat('6633', '#26c6da', '6633')">
+                <div class="avatar-circle" style="background: #26c6da;">👤</div>
                 <div class="chat-details">
-                    <div class="chat-top"><span class="chat-name">667</span><span class="chat-time">10:16 AM</span></div>
-                    <div class="chat-msg" style="color:#d93025;">⚠ You: MNP</div>
+                    <div class="chat-top">
+                        <span class="chat-name">6633</span>
+                        <div class="chat-meta"><span>7:10 PM</span><span class="unread-badge">1</span></div>
+                    </div>
+                    <div class="chat-msg">Jazz se Salam! Pakistan mein SMS jawab muft hain. Kya aap ka ...</div>
                 </div>
             </div>
 
-            <div class="chat-item" onclick="openChat('Ufone 5G', '#81c784')">
-                <div class="avatar" style="background: #81c784;">👤</div>
+            <div class="chat-item" onclick="openChat('JAZZ 5G', '#ffca28', 'JAZZ5G')">
+                <div class="avatar-circle" style="background: #ffca28;">👤</div>
                 <div class="chat-details">
-                    <div class="chat-top"><span class="chat-name">Ufone 5G</span><span class="chat-time">10:12 AM</span></div>
-                    <div class="chat-msg">Welcome, Stay connected. Send ...</div>
+                    <div class="chat-top">
+                        <span class="chat-name">JAZZ 5G</span>
+                        <div class="chat-meta"><span>6:03 PM</span></div>
+                    </div>
+                    <div class="chat-msg">1GBs MUFT DATA! Ap ko 2 din kay...</div>
                 </div>
             </div>
 
-            <!-- 9771 Chat (Target) -->
-            <div class="chat-item" onclick="openChat('9771', '#ffd54f')">
-                <div class="avatar" style="background: #ffd54f;">👤</div>
+            <!-- Target Chat 9771 -->
+            <div class="chat-item" onclick="openChat('9771', '#ffca28', '9771')">
+                <div class="avatar-circle" style="background: #ffca28;">👤</div>
                 <div class="chat-details">
-                    <div class="chat-top"><span class="chat-name">9771</span><span class="chat-time">10:05 AM</span></div>
-                    <div class="chat-msg rtl-text" id="preview-token-msg">آپ ٹوکن نمبر 7715583817 سے سواری ن...</div>
+                    <div class="chat-top">
+                        <span class="chat-name">9771</span>
+                        <div class="chat-meta" id="preview-meta"><span></span></div>
+                    </div>
+                    <div class="chat-msg rtl" id="preview-token-msg">آپ نے ٹوکن نمبر 9641257094 سے سواری LE...</div>
                 </div>
             </div>
+
         </div>
 
-        <!-- Start Chat FAB (Triple Click for Admin) -->
         <button class="fab" id="start-chat-btn">💬 Start chat</button>
 
-        <!-- Inner Chat Screen -->
+        <!-- Inner Chat View -->
         <div class="chat-view" id="chat-view">
             <div class="chat-header">
                 <button class="back-btn" onclick="closeChat()">←</button>
-                <div class="avatar" id="current-avatar" style="width: 36px; height: 36px; font-size: 16px; margin-right:10px;">👤</div>
-                <div class="chat-header-info">
+                <div class="header-info">
+                    <div class="avatar-circle" id="current-avatar" style="width: 40px; height: 40px; font-size: 20px; margin-right:0;">👤</div>
                     <h3 id="current-name">9771</h3>
+                </div>
+                <div class="header-icons-right">
+                    <span>📞</span>
+                    <span>⋮</span>
                 </div>
             </div>
             
+            <!-- Messages Area with Blur ID -->
             <div class="messages-area" id="messages-area">
-                <!-- Messages loaded dynamically -->
+                <!-- Messages load here -->
             </div>
 
-            <!-- Input Box -->
+            <!-- Bottom Input Box -->
             <div class="chat-input-area">
                 <div class="plus-icon">⊕</div>
                 <div class="input-wrapper">
-                    <input type="text" id="msg-input" placeholder="1 Jazz • Text" onkeypress="handleEnter(event)">
-                    <span class="smile-icon">😊</span>
+                    <input type="text" id="msg-input" placeholder="2 Jazz • Text message" onkeypress="handleEnter(event)">
+                    <div class="input-icons">
+                        <span>😊</span>
+                        <span>🖼️</span>
+                    </div>
                 </div>
                 <button class="send-btn" onclick="sendCustomMessage()">
-                    <!-- Send Icon SVG -->
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                 </button>
             </div>
         </div>
+    </div>
 
+    <!-- Action Menu (Google Messages Style) -->
+    <div class="action-menu-overlay" id="action-menu-overlay" onclick="closeActionMenu(event)">
+        <div class="action-menu" onclick="event.stopPropagation()">
+            <button class="action-menu-btn" onclick="forwardMessage()">
+                <svg viewBox="0 0 24 24"><path d="M15 17l5-5-5-5M4 18v-7a4 4 0 014-4h12"></path></svg>
+                Forward
+            </button>
+            <button class="action-menu-btn" onclick="copyMessage()">
+                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg>
+                Copy
+            </button>
+            <button class="action-menu-btn" onclick="starMessage()">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                Star
+            </button>
+            <button class="action-menu-btn" onclick="deleteMessage()">
+                <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path></svg>
+                Delete
+            </button>
+            <button class="action-menu-btn" onclick="selectMore()">
+                <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path></svg>
+                Select more
+            </button>
+            <button class="action-menu-btn" onclick="showInfo()">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Info
+            </button>
+        </div>
     </div>
 
     <!-- Admin Panel Overlay -->
     <div class="admin-overlay" id="admin-overlay">
         <div class="admin-panel">
             <h3>Admin Settings</h3>
-            
             <label>Update Bike/Sawari Number</label>
             <input type="text" id="bike-input" placeholder="Enter bike number">
-
             <label>Update Token Number</label>
             <input type="text" id="token-input" placeholder="Enter token number">
-
             <div class="admin-buttons">
                 <button class="btn-close" onclick="closeAdmin()">Cancel</button>
                 <button class="btn-save" onclick="updateData()">Update Data</button>
@@ -515,39 +557,26 @@
         </div>
     </div>
 
-    <!-- Action Menu (Delete/Forward) Overlay -->
-    <div class="action-menu-overlay" id="action-menu-overlay">
-        <div class="action-menu">
-            <button class="action-menu-btn" onclick="forwardMessage()">➡️ Forward</button>
-            <button class="action-menu-btn danger" onclick="deleteMessage()">🗑️ Delete</button>
-            <button class="action-menu-btn" onclick="closeActionMenu()" style="justify-content:center; color:#1a73e8; font-weight:bold;">Cancel</button>
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
     <div id="toast">Message</div>
 
     <script>
-        // --- Local Storage / Data Variables ---
-        // Default values
-        let currentToken = "7715583817";
-        let currentBikeNumber = "LEX-11-2277";
+        // --- Data & State ---
+        let currentToken = "9641257094";
+        let currentBikeNumber = "LEQ-16-7403";
         let selectedMessageId = null;
+        let selectedMessageText = "";
 
-        // Default messages array
         let defaultMessages = [
-            { id: 1, type: 'received', text: 'آپ ٹوکن نمبر 7715583817 سے سواری رجسٹر ہو سکتی ہے۔', rtl: true },
-            { id: 2, type: 'sent', text: 'REG 3230373410243 LEX2277 P 09052011' },
-            { id: 3, type: 'received', text: 'رجسٹریشن ناکام۔ 8 گھنٹے بعد دوبارہ کوشش کریں۔', rtl: true },
-            { id: 4, type: 'system', text: 'Sending with Jazz' },
-            { id: 5, type: 'sent', text: 'REG 3230373410243 LEX2277 P 09052011' },
-            { id: 6, type: 'received', text: 'رجسٹریشن کامیاب! فائل ریلیف ٹوکن کے لئے TOK لکھ کر بھیجیں۔', rtl: true },
-            { id: 7, type: 'sent', text: 'TOK' }
+            { id: 1, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
+            { id: 2, type: 'sent', text: 'REG 3230373410243 LEX2278 P 07052011' },
+            { id: 3, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
+            { id: 4, type: 'sent', text: 'REG 3230373410243 LEX2280 P 07052011' },
+            { id: 5, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
+            { id: 6, type: 'received', text: 'رجسٹریشن ناکام۔ 8 گھنٹے بعد دوبارہ کوشش کریں۔', rtl: true }
         ];
 
         let messagesData = [];
 
-        // --- Load Data from LocalStorage (Offline Support) ---
         function loadData() {
             const savedToken = localStorage.getItem('app_token');
             const savedBike = localStorage.getItem('app_bike');
@@ -559,14 +588,11 @@
             if (savedMessages) {
                 messagesData = JSON.parse(savedMessages);
             } else {
-                messagesData = [...defaultMessages]; // Load defaults if no saved data
+                messagesData = [...defaultMessages];
             }
-
-            // Update UI preview
             updatePreviewText();
         }
 
-        // --- Save Data to LocalStorage ---
         function saveData() {
             localStorage.setItem('app_token', currentToken);
             localStorage.setItem('app_bike', currentBikeNumber);
@@ -574,21 +600,24 @@
         }
 
         function getTokenMessage() {
-            return `آپ ٹوکن نمبر ${currentToken} سے سواری نمبر ${currentBikeNumber} کے لیے 500 روپے کا فائل ریلیف حاصل کر سکتے ہیں۔ یہ ٹوکن 10:05 تا 01-Nov قابل استعمال ہے۔`;
+            return `آپ نے ٹوکن نمبر ${currentToken} سے سواری ${currentBikeNumber} کے لیے پٹرول پر 500 روپے ریلیف حاصل کرلیا ہے۔ آپ اپنا اگلا ٹوکن 01-Nov کو بنا سکتے ہیں۔`;
         }
 
         function updatePreviewText() {
-            document.getElementById('preview-token-msg').innerText = `آپ ٹوکن نمبر ${currentToken} سے سواری ن...`;
+            const previewElement = document.getElementById('preview-token-msg');
+            if(previewElement) {
+                previewElement.innerText = `آپ نے ٹوکن نمبر ${currentToken} سے سواری LE...`;
+            }
         }
 
         // --- Chat Functions ---
-        function openChat(id, color) {
-            document.getElementById('main-list').style.display = 'none';
+        function openChat(id, color, avatarText) {
+            document.getElementById('main-screen').style.display = 'none';
             document.getElementById('chat-view').style.display = 'flex';
             document.getElementById('current-name').innerText = id;
             
             const avatarDiv = document.getElementById('current-avatar');
-            avatarDiv.innerText = '👤';
+            avatarDiv.innerText = avatarText.charAt(0).toUpperCase();
             avatarDiv.style.background = color;
 
             if(id === '9771') {
@@ -602,102 +631,100 @@
             const area = document.getElementById('messages-area');
             area.innerHTML = '';
 
-            // 1. Render standard messages
             messagesData.forEach(msg => {
                 renderBubble(area, msg.type, msg.text, msg.rtl, msg.id);
             });
 
-            // 2. Render Dynamic Token Message
+            const sendingDiv = document.createElement('div');
+            sendingDiv.className = 'sending-text';
+            sendingDiv.innerHTML = 'Sending with <span>Jazz</span>';
+            area.appendChild(sendingDiv);
+
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'time-stamp';
+            timeDiv.innerText = 'Sunday • 3:14 PM';
+            area.appendChild(timeDiv);
+
             const tokenDiv = document.createElement('div');
             tokenDiv.className = 'msg-bubble msg-received rtl-text';
             tokenDiv.innerText = getTokenMessage();
-            addLongPressEvent(tokenDiv, 'dynamic_token'); // Prevent deleting this
+            addLongPressEvent(tokenDiv, 'dynamic_token', tokenDiv.innerText);
             area.appendChild(tokenDiv);
             
-            // 3. Render Jazz footer
-            const jazzDiv = document.createElement('div');
-            jazzDiv.className = 'jazz-text';
-            jazzDiv.innerHTML = '• Jazz';
-            area.appendChild(jazzDiv);
-            
-            // Scroll to bottom
             setTimeout(() => { area.scrollTop = area.scrollHeight; }, 50);
         }
 
         function renderBubble(container, type, text, isRtl, msgId) {
-            if(type === 'system') {
-                const div = document.createElement('div');
-                div.className = 'sending-text';
-                div.innerHTML = 'Sending with <span>Jazz</span>';
-                container.appendChild(div);
-                return;
-            }
-
             const div = document.createElement('div');
             div.className = `msg-bubble ${type === 'sent' ? 'msg-sent' : 'msg-received'}`;
             if (isRtl) div.classList.add('rtl-text');
             div.innerText = text;
             
-            if(msgId) {
-                addLongPressEvent(div, msgId);
-            }
-            
+            if(msgId) addLongPressEvent(div, msgId, text);
             container.appendChild(div);
         }
 
-        // --- Long Press Logic (Glitch Free) ---
+        // --- Long Press Logic ---
         let pressTimer;
-        let isLongPress = false;
-        
-        function addLongPressEvent(element, msgId) {
-            const startPress = (e) => {
-                isLongPress = false;
+        function addLongPressEvent(element, msgId, text) {
+            const startPress = () => {
                 element.classList.add('active-press');
                 pressTimer = setTimeout(() => {
-                    isLongPress = true;
                     element.classList.remove('active-press');
-                    openActionMenu(msgId);
-                }, 1000); // 1 second hold
+                    openActionMenu(msgId, text);
+                }, 800); // 800ms long press
             };
-
             const cancelPress = () => {
                 element.classList.remove('active-press');
                 clearTimeout(pressTimer);
             };
-
-            // Mobile Touch
             element.addEventListener('touchstart', startPress, {passive: true});
             element.addEventListener('touchend', cancelPress);
             element.addEventListener('touchmove', cancelPress);
-
-            // Desktop Mouse
             element.addEventListener('mousedown', startPress);
             element.addEventListener('mouseup', cancelPress);
             element.addEventListener('mouseleave', cancelPress);
         }
 
-        function openActionMenu(msgId) {
+        // --- Action Menu Logic ---
+        function openActionMenu(msgId, text) {
             selectedMessageId = msgId;
+            selectedMessageText = text;
+            
+            // Apply Blur to Background
+            document.getElementById('messages-area').classList.add('blur-background');
             document.getElementById('action-menu-overlay').style.display = 'flex';
         }
 
-        function closeActionMenu() {
+        function closeActionMenu(event) {
+            if (event && event.target !== event.currentTarget) return;
+            
+            // Remove Blur
+            document.getElementById('messages-area').classList.remove('blur-background');
             document.getElementById('action-menu-overlay').style.display = 'none';
             selectedMessageId = null;
+            selectedMessageText = "";
         }
 
         function deleteMessage() {
             if(selectedMessageId === 'dynamic_token') {
                 showToast("This auto-message cannot be deleted.");
-                closeActionMenu();
-                return;
+                closeActionMenu(); return;
             }
-            
-            // Filter out the selected message
             messagesData = messagesData.filter(m => m.id !== selectedMessageId);
-            saveData(); // Save to local storage
+            saveData();
             renderAllMessages();
             showToast("Message Deleted");
+            closeActionMenu();
+        }
+
+        function copyMessage() {
+            // Copy to clipboard
+            navigator.clipboard.writeText(selectedMessageText).then(() => {
+                showToast("Message Copied!");
+            }).catch(err => {
+                showToast("Failed to copy");
+            });
             closeActionMenu();
         }
 
@@ -706,52 +733,54 @@
             closeActionMenu();
         }
 
+        function starMessage() {
+            showToast("Message Starred ⭐");
+            closeActionMenu();
+        }
+
+        function selectMore() {
+            showToast("Select More Mode");
+            closeActionMenu();
+        }
+
+        function showInfo() {
+            showToast("Info: Delivered to 9771");
+            closeActionMenu();
+        }
+
         function showToast(message) {
             const toast = document.getElementById("toast");
             toast.innerText = message;
             toast.className = "show";
-            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
         }
 
         function closeChat() {
             document.getElementById('chat-view').style.display = 'none';
-            document.getElementById('main-list').style.display = 'block';
+            document.getElementById('main-screen').style.display = 'block';
         }
 
-        // --- Send Message ---
         function sendCustomMessage() {
             const input = document.getElementById('msg-input');
             const text = input.value.trim();
             if(!text) return;
 
-            const newId = Date.now();
-            messagesData.push({ id: newId, type: 'sent', text: text });
-            saveData(); // Save offline
-            
+            messagesData.push({ id: Date.now(), type: 'sent', text: text });
+            saveData();
             input.value = '';
             renderAllMessages();
         }
 
         function handleEnter(e) {
-            if(e.key === 'Enter') {
-                sendCustomMessage();
-            }
+            if(e.key === 'Enter') sendCustomMessage();
         }
 
-        // --- Admin Panel Logic (Triple Click) ---
+        // --- Admin Panel Logic ---
         let clickCount = 0;
-        let clickTimer = null;
-
         document.getElementById('start-chat-btn').addEventListener('click', function() {
             clickCount++;
-            if (clickCount === 3) {
-                openAdmin();
-                clickCount = 0; 
-                clearTimeout(clickTimer);
-            } else {
-                clearTimeout(clickTimer);
-                clickTimer = setTimeout(() => { clickCount = 0; }, 600);
-            }
+            if (clickCount === 3) { openAdmin(); clickCount = 0; }
+            setTimeout(() => { clickCount = 0; }, 600);
         });
 
         function openAdmin() {
@@ -768,27 +797,23 @@
             const newToken = document.getElementById('token-input').value.trim();
             const newBike = document.getElementById('bike-input').value.trim();
             
-            if(newToken === "" || newBike === "") {
-                showToast("Fields cannot be empty!");
-                return;
+            if(newToken && newBike) {
+                currentToken = newToken;
+                currentBikeNumber = newBike;
+                saveData();
+                updatePreviewText();
+                if(document.getElementById('chat-view').style.display === 'flex') renderAllMessages();
+                showToast("Data Updated!");
+                closeAdmin();
             }
-
-            currentToken = newToken;
-            currentBikeNumber = newBike;
-            saveData(); // Save to local storage
-            updatePreviewText();
-
-            if(document.getElementById('chat-view').style.display === 'flex') {
-                renderAllMessages();
-            }
-
-            showToast("Data Updated Successfully!");
-            closeAdmin();
         }
 
-        // Initialize App on load
+        // Init
         window.onload = function() {
             loadData();
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js').catch(err => console.log('SW fail', err));
+            }
         };
     </script>
 </body>
