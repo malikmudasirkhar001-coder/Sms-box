@@ -77,7 +77,7 @@
         /* Chat List Items */
         .chat-item {
             display: flex;
-            padding: 15px 20px;
+            padding: 12px 20px;
             cursor: pointer;
             align-items: center;
         }
@@ -91,8 +91,8 @@
             align-items: center;
             justify-content: center;
             color: white;
-            font-weight: 500;
-            font-size: 24px;
+            font-weight: 400;
+            font-size: 28px;
             margin-right: 15px;
             flex-shrink: 0;
         }
@@ -104,7 +104,7 @@
         .chat-top {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             align-items: center;
         }
         .chat-name {
@@ -118,7 +118,7 @@
         .chat-meta {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             font-size: 13px;
             color: #5f6368;
         }
@@ -132,7 +132,7 @@
             align-items: center;
             justify-content: center;
             font-size: 12px;
-            font-weight: bold;
+            font-weight: 500;
         }
         .chat-msg {
             font-size: 15px;
@@ -140,13 +140,24 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            line-height: 1.3;
+            line-height: 1.4;
         }
         .chat-msg.rtl {
             direction: rtl;
             text-align: right;
             font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif;
             font-size: 17px;
+        }
+        .chat-msg.draft {
+            font-style: italic;
+            color: #5f6368;
+        }
+        .chat-msg.error {
+            color: #d93025;
+        }
+        .chat-msg.error::before {
+            content: "⚠ ";
+            font-size: 14px;
         }
 
         /* --- FAB Button --- */
@@ -157,15 +168,15 @@
             background-color: #c4eed0;
             color: #0d652d;
             border: none;
-            padding: 15px 20px;
-            border-radius: 25px;
+            padding: 16px 24px;
+            border-radius: 30px;
             font-weight: 500;
             font-size: 16px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             z-index: 5;
         }
 
@@ -184,7 +195,7 @@
             align-items: center;
             padding: calc(10px + env(safe-area-inset-top)) 15px 10px 15px;
             background: #f8f9fa;
-            cursor: pointer; /* Makes the whole header clickable for profile */
+            cursor: pointer; 
         }
         .back-btn {
             background: none;
@@ -193,23 +204,29 @@
             cursor: pointer;
             margin-right: 15px;
             color: #202124;
-            z-index: 15; /* Prevents click from triggering profile */
+            z-index: 15;
         }
         .header-info {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
             flex: 1;
         }
+        .header-info .avatar-circle {
+            width: 40px;
+            height: 40px;
+            font-size: 22px;
+            margin-right: 0;
+        }
         .header-info h3 {
-            font-size: 18px;
+            font-size: 20px;
             color: #202124;
-            font-weight: 500;
+            font-weight: 400;
         }
         .header-icons-right {
             display: flex;
-            gap: 20px;
-            font-size: 20px;
+            gap: 25px;
+            font-size: 22px;
             color: #202124;
         }
 
@@ -222,23 +239,17 @@
             flex-direction: column;
             gap: 8px;
             background-color: #f8f9fa;
-            transition: filter 0.3s ease;
         }
         
         .msg-bubble {
-            max-width: 80%;
+            max-width: 85%;
             padding: 12px 16px;
             border-radius: 20px;
-            font-size: 15px;
+            font-size: 16px;
             line-height: 1.4;
             word-wrap: break-word;
             cursor: pointer;
-            transition: transform 0.1s;
-        }
-        .msg-bubble.active-press {
-            transform: scale(0.98);
-            opacity: 0.9;
-            background-color: #d1d5db !important;
+            transition: background-color 0.2s;
         }
         
         .msg-received {
@@ -259,7 +270,7 @@
             direction: rtl; 
             text-align: right; 
             font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif; 
-            font-size: 18px; 
+            font-size: 19px; 
             line-height: 1.8;
         }
         
@@ -275,12 +286,12 @@
             text-align: center;
             font-size: 13px;
             color: #5f6368;
-            margin: 15px 0 5px 0;
+            margin: 15px 0 10px 0;
         }
 
         /* Input Area */
         .chat-input-area {
-            padding: 10px 15px calc(10px + env(safe-area-inset-bottom)) 15px;
+            padding: 8px 15px calc(8px + env(safe-area-inset-bottom)) 15px;
             background: #f8f9fa;
             display: flex;
             align-items: center;
@@ -297,9 +308,8 @@
             border-radius: 24px;
             display: flex;
             align-items: center;
-            padding: 8px 15px;
+            padding: 6px 15px;
             border: 1px solid #dadce0;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
         .chat-input-area input {
             flex: 1;
@@ -312,7 +322,7 @@
         .input-icons { 
             display: flex; 
             gap: 12px; 
-            font-size: 20px; 
+            font-size: 22px; 
             align-items: center;
         }
         .input-icons .emoji-icon { color: #fbbc04; }
@@ -335,31 +345,30 @@
             width: 24px;
             height: 24px;
             fill: #0d652d;
+            margin-left: 4px; /* Slight adjustment for send arrow */
         }
 
-        /* --- 3. Long Press Floating Menu (First Image Style) --- */
+        /* --- 3. Floating Long Press Menu (Reply, Call, Add Contact, Info) --- */
         .floating-menu-overlay {
             position: absolute; 
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.4); 
+            background: rgba(0,0,0,0.3); 
             display: none; 
             flex-direction: column;
             justify-content: center; 
             align-items: center; 
             z-index: 200;
-            backdrop-filter: blur(2px);
         }
         
         .floating-avatar {
             width: 150px;
             height: 150px;
-            border-radius: 30px; /* Rounded square like in image */
+            border-radius: 30px;
             background: #ffca28;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         .floating-avatar svg {
             width: 80px;
@@ -371,28 +380,22 @@
             background: #fff;
             border-radius: 40px;
             display: flex;
-            padding: 10px 20px;
-            gap: 25px;
+            padding: 10px 25px;
+            gap: 30px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         .floating-action-btn {
             background: none;
             border: none;
-            font-size: 22px;
+            font-size: 24px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
             color: #5f6368;
         }
-        .floating-action-btn:active {
-            background: #f1f3f4;
-        }
 
-        /* --- 4. Profile / Contact Info Screen (Second Image Style) --- */
+        /* --- 4. Profile / Contact Info Screen --- */
         .profile-screen {
             display: none;
             flex-direction: column;
@@ -405,7 +408,7 @@
         }
         
         .profile-header {
-            padding: calc(15px + env(safe-area-inset-top)) 20px 15px 20px;
+            padding: calc(15px + env(safe-area-inset-top)) 20px 10px 20px;
             display: flex;
             align-items: center;
         }
@@ -418,31 +421,32 @@
         }
 
         .profile-big-avatar {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             background: #ffca28;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 15px;
+            margin-top: 10px;
         }
         .profile-big-avatar svg {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             fill: #fff;
         }
 
         .profile-name {
-            font-size: 24px;
+            font-size: 28px;
             color: #202124;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             font-weight: 400;
         }
 
         .profile-top-actions {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             margin-bottom: 30px;
             width: 100%;
             justify-content: center;
@@ -451,89 +455,96 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             cursor: pointer;
         }
         .profile-action-btn {
-            width: 80px;
+            width: 100px;
             height: 50px;
             border-radius: 25px;
-            background: #e6f4ea;
+            background: #d7f0e3; /* Light green */
             display: flex;
             align-items: center;
             justify-content: center;
             color: #0d652d;
-            font-size: 20px;
+            font-size: 22px;
         }
         .profile-action span {
-            font-size: 13px;
+            font-size: 14px;
             color: #202124;
         }
 
         /* Profile Cards */
         .profile-card {
             background: #fff;
-            border-radius: 15px;
+            border-radius: 12px;
             width: 100%;
             padding: 15px 20px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        }
-        .profile-card-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .profile-card-left .icon {
-            font-size: 20px;
-            color: #5f6368;
-        }
-        .profile-card-text {
+            margin-bottom: 15px;
             display: flex;
             flex-direction: column;
-        }
-        .profile-card-text .title {
-            font-size: 16px;
-            color: #202124;
-            margin-bottom: 2px;
-        }
-        .profile-card-text .subtitle {
-            font-size: 14px;
-            color: #5f6368;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
         
-        /* Switch Icon Fix */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 15px;
+            color: #202124;
+        }
         .switch-icon {
             display: flex;
             align-items: center;
             gap: 5px;
             color: #0d652d;
             font-weight: 500;
-            font-size: 14px;
             cursor: pointer;
         }
         .switch-icon svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             fill: currentColor;
+        }
+        
+        .card-body {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .card-body .icon {
+            font-size: 24px;
+            color: #5f6368;
+        }
+        .card-body .text {
+            display: flex;
+            flex-direction: column;
+        }
+        .card-body .text .title {
+            font-size: 18px;
+            color: #202124;
+            margin-bottom: 4px;
+        }
+        .card-body .text .subtitle {
+            font-size: 15px;
+            color: #5f6368;
         }
 
         /* List Items */
         .profile-list-item {
             background: #fff;
-            border-radius: 15px;
+            border-radius: 12px;
             width: 100%;
-            padding: 18px 20px;
-            margin-bottom: 12px;
+            padding: 20px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 20px;
-            font-size: 16px;
+            font-size: 17px;
             color: #202124;
             cursor: pointer;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
         .profile-list-item.danger {
             color: #d93025;
@@ -581,41 +592,126 @@
 
     <div class="app-container">
         
-        <!-- 1. Main Chat List -->
+        <!-- 1. Main Chat List Screen -->
         <div class="main-screen" id="main-screen">
             <div class="top-header">
                 <h1><span>Google</span> Messages</h1>
                 <div class="header-icons">
                     <span class="search-icon">🔍</span>
+                    <!-- User provided Blue Avatar Image -->
                     <img src="https://i.ibb.co/8gvbm3XM/160165.jpg" class="top-avatar-img" alt="Profile">
                 </div>
             </div>
 
+            <!-- Chat 1 -->
             <div class="chat-item" onclick="openChat('0303 0300000', '#ab47bc', '0')">
-                <div class="avatar-circle" style="background: #ab47bc;">0</div>
+                <div class="avatar-circle" style="background: #ab47bc;">👤</div>
                 <div class="chat-details">
                     <div class="chat-top">
                         <span class="chat-name">0303 0300000</span>
-                        <div class="chat-meta"><span>6 min</span></div>
+                        <div class="chat-meta"><span>6 min</span><span class="unread-badge">1</span></div>
                     </div>
-                    <div class="chat-msg rtl">معزز صارف، کیا آپ اپنے علاقے کے موسم...</div>
+                    <div class="chat-msg rtl">معزز صارف، کیا آپ اپنے علاقے کے موسم، فصلوں اور جان...</div>
                 </div>
             </div>
 
-            <!-- Target Chat -->
+            <!-- Chat 2 -->
+            <div class="chat-item" onclick="openChat('6633', '#26c6da', '6')">
+                <div class="avatar-circle" style="background: #26c6da;">👤</div>
+                <div class="chat-details">
+                    <div class="chat-top">
+                        <span class="chat-name">6633</span>
+                        <div class="chat-meta"><span>7:10 PM</span><span class="unread-badge">1</span></div>
+                    </div>
+                    <div class="chat-msg">Jazz se Salam! Pakistan mein SMS jawab muft hain. Kya aap ka ...</div>
+                </div>
+            </div>
+
+            <!-- Chat 3 -->
+            <div class="chat-item" onclick="openChat('JAZZ 5G', '#ffca28', 'J')">
+                <div class="avatar-circle" style="background: #ffca28;">👤</div>
+                <div class="chat-details">
+                    <div class="chat-top">
+                        <span class="chat-name">JAZZ 5G</span>
+                        <div class="chat-meta"><span>6:03 PM</span></div>
+                    </div>
+                    <div class="chat-msg">1GBs MUFT DATA! Ap ko 2 din kay...</div>
+                </div>
+            </div>
+
+            <!-- Chat 4 (Draft) -->
+            <div class="chat-item" onclick="openChat('8558', '#4dd0e1', '8')">
+                <div class="avatar-circle" style="background: #4dd0e1;">👤</div>
+                <div class="chat-details">
+                    <div class="chat-top">
+                        <span class="chat-name">8558</span>
+                        <div class="chat-meta"><span style="font-style:italic;">Draft</span></div>
+                    </div>
+                    <div class="chat-msg draft">You: 3230334312660</div>
+                </div>
+            </div>
+
+            <!-- Chat 5 -->
+            <div class="chat-item" onclick="openChat('Jazz', '#26c6da', 'J')">
+                <div class="avatar-circle" style="background: #26c6da;">👤</div>
+                <div class="chat-details">
+                    <div class="chat-top">
+                        <span class="chat-name">Jazz</span>
+                        <div class="chat-meta"><span>12:01 PM</span><span class="unread-badge">2</span></div>
+                    </div>
+                    <div class="chat-msg">Muaziz Sarif, Apko 1 din k liye 10 MUFT Jazz MINS de diye gaey he...</div>
+                </div>
+            </div>
+
+            <!-- Chat 6 -->
+            <div class="chat-item" onclick="openChat('JAZZ OFFER', '#ab47bc', 'J')">
+                <div class="avatar-circle" style="background: #ab47bc;">👤</div>
+                <div class="chat-details">
+                    <div class="chat-top">
+                        <span class="chat-name">JAZZ OFFER</span>
+                        <div class="chat-meta"><span>9:17 AM</span><span class="unread-badge">1</span></div>
+                    </div>
+                    <div class="chat-msg rtl">ماہانہ 800 جاز منٹس اور 1GB بک فیس خاص آپ کے لیے! صرف 147 کے بیلنس می...</div>
+                </div>
+            </div>
+
+            <!-- Chat 7 -->
+            <div class="chat-item" onclick="openChat('SIMOSA', '#ff9800', 'S')">
+                <div class="avatar-circle" style="background: #ff9800;">👤</div>
+                <div class="chat-details">
+                    <div class="chat-top">
+                        <span class="chat-name">SIMOSA</span>
+                        <div class="chat-meta"><span>Tue</span><span class="unread-badge">1</span></div>
+                    </div>
+                    <div class="chat-msg">MUFT 3GB tak data paayein, SIMOSA ke Daily Reward section se. Abhi clai...</div>
+                </div>
+            </div>
+
+            <!-- Chat 8 -->
+            <div class="chat-item" onclick="openChat('JAZZ', '#ff9800', 'J')">
+                <div class="avatar-circle" style="background: #ff9800;">👤</div>
+                <div class="chat-details">
+                    <div class="chat-top">
+                        <span class="chat-name">JAZZ</span>
+                    </div>
+                    <div class="chat-msg">1 Paise mai 8GB Internet! Abhi *551#</div>
+                </div>
+            </div>
+
+            <!-- Chat 9 (Target Chat) -->
             <div class="chat-item" onclick="openChat(currentChatId, '#ffca28', currentAvatarLetter)">
-                <div class="avatar-circle" id="list-avatar" style="background: #ffca28;">9</div>
+                <div class="avatar-circle" id="list-avatar" style="background: #ffca28;">👤</div>
                 <div class="chat-details">
                     <div class="chat-top">
                         <span class="chat-name" id="list-chat-name">9771</span>
-                        <div class="chat-meta"><span></span></div>
                     </div>
-                    <div class="chat-msg rtl" id="preview-token-msg">آپ ٹوکن نمبر 7715583817 سے...</div>
+                    <div class="chat-msg rtl" id="preview-token-msg">آپ نے ٹوکن نمبر 9641257094 سے سواری LE...</div>
                 </div>
             </div>
 
         </div>
 
+        <!-- Start Chat FAB -->
         <button class="fab" id="start-chat-btn">💬 Start chat</button>
 
         <!-- 2. Inner Chat View -->
@@ -624,7 +720,7 @@
             <div class="chat-header" onclick="openProfile()">
                 <button class="back-btn" onclick="closeChat(event)">←</button>
                 <div class="header-info">
-                    <div class="avatar-circle" id="current-avatar" style="width: 40px; height: 40px; font-size: 22px; margin-right:0; background: #ffca28;">9</div>
+                    <div class="avatar-circle" id="current-avatar" style="background: #ffca28;">👤</div>
                     <h3 id="current-name">9771</h3>
                 </div>
                 <div class="header-icons-right">
@@ -634,7 +730,7 @@
             </div>
             
             <div class="messages-area" id="messages-area">
-                <!-- Messages load here -->
+                <!-- Messages load dynamically -->
             </div>
 
             <div class="chat-input-area">
@@ -655,14 +751,13 @@
         <!-- 3. Floating Long Press Menu -->
         <div class="floating-menu-overlay" id="floating-menu" onclick="closeFloatingMenu(event)">
             <div class="floating-avatar">
-                <!-- User SVG Icon -->
                 <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
             </div>
             <div class="floating-actions">
-                <button class="floating-action-btn" onclick="replyMessage()">💬</button>
-                <button class="floating-action-btn" onclick="callContact()">📞</button>
-                <button class="floating-action-btn" onclick="addContact()">👤+</button>
-                <button class="floating-action-btn" onclick="infoMessage()">ℹ️</button>
+                <button class="floating-action-btn" onclick="replyMessage(event)">💬</button>
+                <button class="floating-action-btn" onclick="callContact(event)">📞</button>
+                <button class="floating-action-btn" onclick="addContact(event)">👤+</button>
+                <button class="floating-action-btn" onclick="infoMessage(event)">ℹ️</button>
             </div>
         </div>
 
@@ -694,18 +789,21 @@
                     </div>
                 </div>
 
-                <!-- Sending with Card (Fix measurement) -->
+                <!-- Sending with Card -->
                 <div class="profile-card">
-                    <div class="profile-card-left">
-                        <div class="icon">💳</div>
-                        <div class="profile-card-text">
+                    <div class="card-header">
+                        <span>Sending with</span>
+                        <div class="switch-icon">
+                            <svg viewBox="0 0 24 24"><path d="M7 10l5-5 5 5H7zm0 4l5 5 5-5H7z"/></svg>
+                            Switch
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="icon">📇</div>
+                        <div class="text">
                             <span class="title">2 Jazz</span>
                             <span class="subtitle">0329 1667662</span>
                         </div>
-                    </div>
-                    <div class="switch-icon">
-                        <svg viewBox="0 0 24 24"><path d="M7 10l5-5 5 5H7zm0 4l5 5 5-5H7z"/></svg>
-                        Switch
                     </div>
                 </div>
 
@@ -759,18 +857,19 @@
 
     <script>
         // --- Data & State ---
-        let currentToken = "7715583817";
-        let currentBikeNumber = "LEX-11-2259";
+        let currentToken = "9641257094";
+        let currentBikeNumber = "LEQ-16-7403";
         let currentChatId = "9771";
         let currentAvatarLetter = "9";
 
         let defaultMessages = [
-            { id: 1, type: 'received', text: 'آپ ٹوکن نمبر 7715583817 سے سواری رجسٹر ہو سکتی ہے۔', rtl: true },
-            { id: 2, type: 'sent', text: 'REG 3230373410243 LEX2277 P 09052011' },
-            { id: 3, type: 'received', text: 'رجسٹریشن ناکام۔ 8 گھنٹے بعد دوبارہ کوشش کریں۔', rtl: true },
-            { id: 4, type: 'system', text: 'Sending with Jazz' },
-            { id: 5, type: 'received', text: 'رجسٹریشن کامیاب! فائل ریلیف ٹوکن کے لئے TOK لکھ کر بھیجیں۔', rtl: true },
-            { id: 6, type: 'sent', text: 'TOK' }
+            { id: 1, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
+            { id: 2, type: 'sent', text: 'REG 3230373410243 LEX2278 P 07052011' },
+            { id: 3, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
+            { id: 4, type: 'sent', text: 'REG 3230373410243 LEX2280 P 07052011' },
+            { id: 5, type: 'received', text: 'یہ نمبر دوسری سواری پر رجسٹرڈ ہے۔ ایک نمبر پر ایک سواری رجسٹر ہو سکتی ہے۔', rtl: true },
+            { id: 6, type: 'received', text: 'رجسٹریشن ناکام۔ 8 گھنٹے بعد دوبارہ کوشش کریں۔', rtl: true },
+            { id: 7, type: 'system', text: 'Sending with Jazz' }
         ];
 
         let messagesData = [];
@@ -810,14 +909,18 @@
 
         function updateUIElements() {
             document.getElementById('list-chat-name').innerText = currentChatId;
-            document.getElementById('list-avatar').innerText = currentAvatarLetter;
             document.getElementById('current-name').innerText = currentChatId;
-            document.getElementById('current-avatar').innerText = currentAvatarLetter;
             document.getElementById('profile-name-text').innerText = currentChatId;
+            
+            // Set icons for avatars (Default User Icon SVG)
+            const avatarSvg = `<svg viewBox="0 0 24 24" style="width: 28px; height: 28px; fill: #fff;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
+            
+            document.getElementById('list-avatar').innerHTML = avatarSvg;
+            document.getElementById('current-avatar').innerHTML = avatarSvg;
             
             const previewElement = document.getElementById('preview-token-msg');
             if(previewElement) {
-                previewElement.innerText = `آپ ٹوکن نمبر ${currentToken} سے سواری...`;
+                previewElement.innerText = `آپ نے ٹوکن نمبر ${currentToken} سے سواری LE...`;
             }
         }
 
@@ -837,7 +940,7 @@
         }
 
         function closeChat(event) {
-            if(event) event.stopPropagation(); // Prevents opening profile when clicking back
+            if(event) event.stopPropagation(); 
             document.getElementById('chat-view').style.display = 'none';
             document.getElementById('main-screen').style.display = 'block';
         }
@@ -866,11 +969,13 @@
                 }
             });
 
+            // Timestamp
             const timeDiv = document.createElement('div');
             timeDiv.className = 'time-stamp';
             timeDiv.innerText = 'Sunday • 3:14 PM';
             area.appendChild(timeDiv);
 
+            // Token Message
             const tokenDiv = document.createElement('div');
             tokenDiv.className = 'msg-bubble msg-received rtl-text';
             tokenDiv.innerText = getTokenMessage();
@@ -890,18 +995,15 @@
             container.appendChild(div);
         }
 
-        // --- Long Press Logic (Floating Menu) ---
+        // --- Long Press Logic ---
         let pressTimer;
         function addLongPressEvent(element, msgId) {
             const startPress = () => {
-                element.classList.add('active-press');
                 pressTimer = setTimeout(() => {
-                    element.classList.remove('active-press');
                     openFloatingMenu();
                 }, 600); 
             };
             const cancelPress = () => {
-                element.classList.remove('active-press');
                 clearTimeout(pressTimer);
             };
             element.addEventListener('touchstart', startPress, {passive: true});
@@ -922,23 +1024,29 @@
             }
         }
 
-        // Floating Menu Actions
-        function replyMessage() {
+        function replyMessage(event) {
+            if(event) event.stopPropagation();
             showToast("Reply Mode");
             closeFloatingMenu({target: document.getElementById('floating-menu')});
         }
-        function infoMessage() {
+        
+        function infoMessage(event) {
+            if(event) event.stopPropagation();
             showToast("Message Info");
             closeFloatingMenu({target: document.getElementById('floating-menu')});
         }
 
         // --- Profile Actions ---
-        function callContact() {
+        function callContact(event) {
+            if(event) event.stopPropagation();
             window.location.href = `tel:${currentChatId}`;
         }
-        function addContact() {
-            showToast("Contact Added!");
+        
+        function addContact(event) {
+            if(event) event.stopPropagation();
+            showToast("Contact Saved Successfully!");
         }
+        
         function blockContact() {
             showToast("Contact Blocked!");
         }
@@ -979,7 +1087,6 @@
             document.getElementById('token-input').value = currentToken;
             document.getElementById('bike-input').value = currentBikeNumber;
             document.getElementById('admin-chat-id').value = currentChatId;
-            document.getElementById('admin-avatar-letter').value = currentAvatarLetter;
         }
 
         function closeAdmin() {
@@ -990,13 +1097,11 @@
             const newToken = document.getElementById('token-input').value.trim();
             const newBike = document.getElementById('bike-input').value.trim();
             const newChatId = document.getElementById('admin-chat-id').value.trim();
-            const newAvatar = document.getElementById('admin-avatar-letter').value.trim();
             
-            if(newToken && newBike && newChatId && newAvatar) {
+            if(newToken && newBike && newChatId) {
                 currentToken = newToken;
                 currentBikeNumber = newBike;
                 currentChatId = newChatId;
-                currentAvatarLetter = newAvatar;
                 
                 saveData();
                 updateUIElements();
