@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,7 +47,7 @@
         }
         
         .top-header {
-            padding: calc(15px + env(safe-area-inset-top)) 20px 15px 20px; 
+            padding: calc(15px + env(safe-area-inset-top)) 15px 15px 15px; 
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -67,19 +66,17 @@
         .header-icons { 
             display: flex; 
             align-items: center; 
-            gap: 15px; 
+            gap: 10px; 
         }
         
-        /* Authentic Search Bar */
+        /* Authentic Search Bar (Smaller Size) */
         .search-container {
-            flex: 1;
-            max-width: 200px;
+            width: 140px; /* Fixed smaller width */
             display: flex;
             align-items: center;
             background: #e8eaed;
             border-radius: 20px;
-            padding: 8px 12px;
-            margin-right: 10px;
+            padding: 6px 12px;
         }
         .search-container input {
             border: none;
@@ -105,23 +102,22 @@
         /* Chat List Items */
         .chat-item {
             display: flex;
-            padding: 12px 20px;
+            padding: 12px 15px;
             cursor: pointer;
             align-items: center;
         }
         .chat-item:active { background-color: #e8eaed; }
         
-        /* Avatar click opens profile, chat click opens chat */
         .avatar-circle {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: 400;
-            font-size: 28px;
+            font-size: 26px;
             margin-right: 15px;
             flex-shrink: 0;
             cursor: pointer;
@@ -140,7 +136,7 @@
         .chat-name {
             font-weight: 500;
             color: #202124;
-            font-size: 17px;
+            font-size: 16px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -149,23 +145,23 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 13px;
+            font-size: 12px;
             color: #5f6368;
         }
         .unread-badge {
             background-color: #1e8e3e;
             color: white;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
         }
         .chat-msg {
-            font-size: 15px;
+            font-size: 14px;
             color: #5f6368;
             white-space: nowrap;
             overflow: hidden;
@@ -176,7 +172,7 @@
             direction: rtl;
             text-align: right;
             font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif;
-            font-size: 17px;
+            font-size: 16px;
         }
         .chat-msg.draft {
             font-style: italic;
@@ -187,30 +183,30 @@
         }
         .chat-msg.error::before {
             content: "⚠ ";
-            font-size: 14px;
+            font-size: 13px;
         }
 
         /* --- FAB Button --- */
         .fab {
             position: absolute;
             bottom: calc(20px + env(safe-area-inset-bottom));
-            right: 20px;
+            right: 15px;
             background-color: #c4eed0;
             color: #0d652d;
             border: none;
-            padding: 16px 24px;
+            padding: 14px 20px;
             border-radius: 30px;
             font-weight: 500;
-            font-size: 16px;
+            font-size: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             z-index: 5;
         }
 
-        /* --- 2. Chat View (Inner Screen) --- */
+        /* --- 2. Inner Chat View --- */
         .chat-view {
             display: none;
             flex-direction: column;
@@ -229,33 +225,33 @@
         .back-btn {
             background: none;
             border: none;
-            font-size: 26px;
+            font-size: 24px;
             cursor: pointer;
-            margin-right: 15px;
+            margin-right: 10px;
             color: #202124;
         }
         .header-info {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             flex: 1;
-            cursor: pointer; /* Click to open profile */
+            cursor: pointer;
         }
         .header-info .avatar-circle {
-            width: 40px;
-            height: 40px;
-            font-size: 22px;
+            width: 38px;
+            height: 38px;
+            font-size: 20px;
             margin-right: 0;
         }
         .header-info h3 {
-            font-size: 20px;
+            font-size: 18px;
             color: #202124;
             font-weight: 400;
         }
         .header-icons-right {
             display: flex;
-            gap: 25px;
-            font-size: 22px;
+            gap: 20px;
+            font-size: 20px;
             color: #202124;
         }
 
@@ -272,13 +268,12 @@
         
         .msg-bubble {
             max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 20px;
-            font-size: 16px;
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 15px;
             line-height: 1.4;
             word-wrap: break-word;
             cursor: pointer;
-            transition: background-color 0.2s;
         }
         
         .msg-received {
@@ -299,13 +294,13 @@
             direction: rtl; 
             text-align: right; 
             font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif; 
-            font-size: 19px; 
-            line-height: 1.8;
+            font-size: 18px; 
+            line-height: 1.6;
         }
         
         .sending-text {
             text-align: center;
-            font-size: 13px;
+            font-size: 12px;
             color: #5f6368;
             margin: 10px 0;
         }
@@ -313,23 +308,24 @@
         
         .time-stamp {
             text-align: center;
-            font-size: 13px;
+            font-size: 12px;
             color: #5f6368;
             margin: 15px 0 10px 0;
         }
 
-        /* Input Area */
+        /* FIXED: Input Area to keep send button inside */
         .chat-input-area {
-            padding: 8px 15px calc(8px + env(safe-area-inset-bottom)) 15px;
+            padding: 8px 12px calc(8px + env(safe-area-inset-bottom)) 12px;
             background: #f8f9fa;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px; /* Reduced gap */
         }
         .plus-icon {
-            font-size: 26px;
+            font-size: 24px;
             color: #5f6368;
             cursor: pointer;
+            flex-shrink: 0;
         }
         .input-wrapper {
             flex: 1;
@@ -337,94 +333,50 @@
             border-radius: 24px;
             display: flex;
             align-items: center;
-            padding: 6px 15px;
+            padding: 6px 12px;
             border: 1px solid #dadce0;
+            min-width: 0; /* Prevents overflow */
         }
         .chat-input-area input {
             flex: 1;
             border: none;
             outline: none;
-            font-size: 16px;
+            font-size: 15px;
             background: transparent;
+            min-width: 0;
         }
         
         .input-icons { 
             display: flex; 
-            gap: 12px; 
-            font-size: 22px; 
+            gap: 8px; 
+            font-size: 20px; 
             align-items: center;
         }
         .input-icons .emoji-icon { color: #fbbc04; }
         .input-icons .image-icon { color: #1a73e8; }
         
+        /* FIXED: Send button size and flex-shrink */
         .chat-input-area button.send-btn {
             background: #c4eed0;
             color: #0d652d; 
             border: none;
             border-radius: 50%;
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
+            flex-shrink: 0; /* Prevents button from shrinking or overflowing */
         }
         .chat-input-area button.send-btn svg {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             fill: #0d652d;
-            margin-left: 4px;
+            margin-left: 2px;
         }
 
-        /* --- 3. Long Press Floating Menu (Reply, Call, Contact, Info) --- */
-        .floating-menu-overlay {
-            position: absolute; 
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.3); 
-            display: none; 
-            flex-direction: column;
-            justify-content: center; 
-            align-items: center; 
-            z-index: 200;
-        }
-        
-        .floating-avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 30px;
-            background: #ffca28;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-        .floating-avatar svg {
-            width: 80px;
-            height: 80px;
-            fill: #fff;
-        }
-
-        .floating-actions {
-            background: #fff;
-            border-radius: 40px;
-            display: flex;
-            padding: 10px 25px;
-            gap: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .floating-action-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #5f6368;
-        }
-
-        /* --- 4. Long Press Action Menu (Copy, Forward, Delete) --- */
+        /* --- 3. Long Press Action Menu (Copy, Forward, Delete) --- */
         .action-menu-overlay {
             position: absolute; 
             top: 0; left: 0; right: 0; bottom: 0;
@@ -468,7 +420,7 @@
             stroke-linejoin: round;
         }
 
-        /* --- 5. Profile / Contact Info Screen --- */
+        /* --- 4. Profile / Contact Info Screen --- */
         .profile-screen {
             display: none;
             flex-direction: column;
@@ -481,21 +433,21 @@
         }
         
         .profile-header {
-            padding: calc(15px + env(safe-area-inset-top)) 20px 10px 20px;
+            padding: calc(15px + env(safe-area-inset-top)) 15px 10px 15px;
             display: flex;
             align-items: center;
         }
         
         .profile-content {
-            padding: 0 20px 40px 20px;
+            padding: 0 15px 40px 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         .profile-big-avatar {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             background: #ffca28;
             display: flex;
@@ -505,22 +457,22 @@
             margin-top: 10px;
         }
         .profile-big-avatar svg {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             fill: #fff;
         }
 
         .profile-name {
-            font-size: 28px;
+            font-size: 24px;
             color: #202124;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-weight: 400;
         }
 
         .profile-top-actions {
             display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 15px;
+            margin-bottom: 25px;
             width: 100%;
             justify-content: center;
         }
@@ -528,22 +480,22 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             cursor: pointer;
         }
         .profile-action-btn {
-            width: 100px;
-            height: 50px;
-            border-radius: 25px;
+            width: 85px;
+            height: 45px;
+            border-radius: 22px;
             background: #d7f0e3;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #0d652d;
-            font-size: 22px;
+            font-size: 20px;
         }
         .profile-action span {
-            font-size: 14px;
+            font-size: 13px;
             color: #202124;
         }
 
@@ -551,8 +503,8 @@
             background: #fff;
             border-radius: 12px;
             width: 100%;
-            padding: 15px 20px;
-            margin-bottom: 15px;
+            padding: 15px;
+            margin-bottom: 12px;
             display: flex;
             flex-direction: column;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
@@ -562,8 +514,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            font-size: 15px;
+            margin-bottom: 12px;
+            font-size: 14px;
             color: #202124;
         }
         .switch-icon {
@@ -575,18 +527,18 @@
             cursor: pointer;
         }
         .switch-icon svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             fill: currentColor;
         }
         
         .card-body {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
         .card-body .icon {
-            font-size: 24px;
+            font-size: 22px;
             color: #5f6368;
         }
         .card-body .text {
@@ -594,12 +546,12 @@
             flex-direction: column;
         }
         .card-body .text .title {
-            font-size: 18px;
+            font-size: 16px;
             color: #202124;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         .card-body .text .subtitle {
-            font-size: 15px;
+            font-size: 14px;
             color: #5f6368;
         }
 
@@ -607,12 +559,12 @@
             background: #fff;
             border-radius: 12px;
             width: 100%;
-            padding: 20px;
+            padding: 16px;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 20px;
-            font-size: 17px;
+            gap: 15px;
+            font-size: 16px;
             color: #202124;
             cursor: pointer;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
@@ -621,8 +573,8 @@
             color: #d93025;
         }
         .profile-list-item svg {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             fill: none;
             stroke: currentColor;
             stroke-width: 2;
@@ -668,7 +620,7 @@
             <div class="top-header">
                 <h1><span>Google</span> Messages</h1>
                 <div class="header-icons">
-                    <!-- Authentic Search Bar -->
+                    <!-- Fixed Smaller Search Bar -->
                     <div class="search-container">
                         <input type="text" placeholder="Search...">
                     </div>
@@ -791,7 +743,6 @@
         <div class="chat-view" id="chat-view">
             <div class="chat-header">
                 <button class="back-btn" onclick="closeChat(event)">←</button>
-                <!-- Clicking header info opens Profile -->
                 <div class="header-info" onclick="openProfileFromChat()">
                     <div class="avatar-circle" id="current-avatar" style="background: #ffca28;">👤</div>
                     <h3 id="current-name">9771</h3>
@@ -806,13 +757,14 @@
                 <!-- Messages load dynamically -->
             </div>
 
+            <!-- FIXED: Input Area -->
             <div class="chat-input-area">
                 <div class="plus-icon">⊕</div>
                 <div class="input-wrapper">
                     <input type="text" id="msg-input" placeholder="2 Jazz • Text message" onkeypress="handleEnter(event)">
                     <div class="input-icons">
-                        <span class="emoji-icon">😊</span>
-                        <span class="image-icon">🖼️</span>
+                        <span class="emoji-icon"></span>
+                        <span class="image-icon"></span>
                     </div>
                 </div>
                 <button class="send-btn" onclick="sendCustomMessage()">
@@ -821,20 +773,7 @@
             </div>
         </div>
 
-        <!-- 3. Floating Long Press Menu (Reply, Call, Contact, Info) -->
-        <div class="floating-menu-overlay" id="floating-menu" onclick="closeFloatingMenu(event)">
-            <div class="floating-avatar">
-                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-            </div>
-            <div class="floating-actions">
-                <button class="floating-action-btn" onclick="replyMessage(event)">💬</button>
-                <button class="floating-action-btn" onclick="callContact(event)">📞</button>
-                <button class="floating-action-btn" onclick="addContact(event)">👤+</button>
-                <button class="floating-action-btn" onclick="infoMessage(event)">ℹ️</button>
-            </div>
-        </div>
-
-        <!-- 4. Long Press Action Menu (Copy, Forward, Delete) -->
+        <!-- 3. Long Press Action Menu (Copy, Forward, Delete) -->
         <div class="action-menu-overlay" id="action-menu-overlay" onclick="closeActionMenu(event)">
             <div class="action-menu" onclick="event.stopPropagation()">
                 <button class="action-menu-btn" onclick="forwardMessage()">
@@ -852,7 +791,7 @@
             </div>
         </div>
 
-        <!-- 5. Profile / Contact Info Screen -->
+        <!-- 4. Profile / Contact Info Screen -->
         <div class="profile-screen" id="profile-screen">
             <div class="profile-header">
                 <button class="back-btn" onclick="closeProfile()">←</button>
@@ -948,7 +887,7 @@
         let currentBikeNumber = "LEQ-16-7403";
         let currentChatId = "9771";
         
-        let activeChatContext = ""; // Tracks which chat is currently open
+        let activeChatContext = ""; 
         let selectedMessageId = null;
         let selectedMessageText = "";
         let pressTimer;
@@ -1049,7 +988,6 @@
 
         function openProfileFromChat() {
             if(!activeChatContext) return;
-            // Get color from current avatar
             const color = document.getElementById('current-avatar').style.background;
             openProfile(activeChatContext, color);
         }
@@ -1076,7 +1014,6 @@
                 }
             });
 
-            // If it's the 9771 chat, add timestamp and token message
             if(chatId === "9771") {
                 const timeDiv = document.createElement('div');
                 timeDiv.className = 'time-stamp';
@@ -1086,7 +1023,6 @@
                 const tokenDiv = document.createElement('div');
                 tokenDiv.className = 'msg-bubble msg-received rtl-text';
                 tokenDiv.innerText = getTokenMessage();
-                // Long press on token msg opens action menu (copy/delete)
                 addLongPressEvent(tokenDiv, 'dynamic_token', tokenDiv.innerText, chatId);
                 area.appendChild(tokenDiv);
             }
@@ -1108,7 +1044,6 @@
         function addLongPressEvent(element, msgId, text, chatId) {
             const startPress = () => {
                 pressTimer = setTimeout(() => {
-                    // Show Action Menu (Copy, Forward, Delete)
                     selectedMessageId = msgId;
                     selectedMessageText = text;
                     document.getElementById('action-menu-overlay').style.display = 'flex';
@@ -1138,7 +1073,8 @@
             }
             
             allChatsData[activeChatContext] = allChatsData[activeChatContext].filter(m => m.id !== selectedMessageId);
-            saveData();
+            if(activeChatContext === "9771") saveData();
+            
             renderAllMessages(activeChatContext);
             showToast("Message Deleted");
             closeActionMenu();
@@ -1156,22 +1092,9 @@
             closeActionMenu();
         }
 
-        // --- Floating Profile Menu (Reply/Call/etc) ---
-        // Note: As requested, this only opens if you long press a message in SOME versions, 
-        // but based on latest instruction, the user wants the copy/delete menu. 
-        // If you still want the floating menu on long press, replace the timeout above with openFloatingMenu().
-        function openFloatingMenu() {
-            document.getElementById('floating-menu').style.display = 'flex';
-        }
-        function closeFloatingMenu(event) {
-            if(event.target === document.getElementById('floating-menu')) {
-                document.getElementById('floating-menu').style.display = 'none';
-            }
-        }
-        function replyMessage(event) { if(event) event.stopPropagation(); showToast("Reply"); closeFloatingMenu({target: document.getElementById('floating-menu')}); }
+        // --- Profile Functions ---
         function callContact(event) { if(event) event.stopPropagation(); window.location.href = `tel:${activeChatContext}`; }
         function addContact(event) { if(event) event.stopPropagation(); showToast("Contact Saved!"); }
-        function infoMessage(event) { if(event) event.stopPropagation(); showToast("Message Info"); closeFloatingMenu({target: document.getElementById('floating-menu')}); }
         function blockContact() { showToast("Contact Blocked!"); }
 
         function showToast(message) {
@@ -1190,7 +1113,7 @@
             if(!allChatsData[activeChatContext]) allChatsData[activeChatContext] = [];
             
             allChatsData[activeChatContext].push({ id: Date.now(), type: 'sent', text: text });
-            if(activeChatContext === "9771") saveData(); // Only save 9771 to local storage as requested for simplicity
+            if(activeChatContext === "9771") saveData();
             
             input.value = '';
             renderAllMessages(activeChatContext);
